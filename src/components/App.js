@@ -1,4 +1,5 @@
 import React from 'react';
+import { Switch, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Header from './Header';
 import Footer from './Footer';
@@ -6,6 +7,9 @@ import Main from './Main';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import api from '../utils/api.js';
+import PageNotFound from './PageNotFound';
+import PageSignUp from './PageSignUp';
+import PageSignIn from './PageSignIn';
 import CurrentUserContext from '../contexts/CurrentUserContext';
 
 import EditProfilePopup from './EditProfilePopup';
@@ -174,61 +178,79 @@ function App() {
   }
 
   return (
-    <CurrentUserContext.Provider value={currentUser}>
-      <Header />
-      <main className="content">
-        <Main
-          handleEditAvatarClick={handleEditAvatarClick}
-          handleEditProfileClick={handleEditProfileClick}
-          handleAddPlaceClick={handleAddPlaceClick}
-          handleConfirmClick={handleConfirmClick}
-          handleImagePopupOpen={handleImagePopupOpen}
-          handleCardClick={handleCardClick}
+      <CurrentUserContext.Provider value={currentUser}>
+        <Header />
+        <Switch>
+            <Route exact path="/">
+                <main className="content">        
+                  <Main
+                    handleEditAvatarClick={handleEditAvatarClick}
+                    handleEditProfileClick={handleEditProfileClick}
+                    handleAddPlaceClick={handleAddPlaceClick}
+                    handleConfirmClick={handleConfirmClick}
+                    handleImagePopupOpen={handleImagePopupOpen}
+                    handleCardClick={handleCardClick}
 
-          cards={cards}
-          handleCardLike={handleCardLike}
-          handleCardDelete={handleCardDelete}
+                    cards={cards}
+                    handleCardLike={handleCardLike}
+                    handleCardDelete={handleCardDelete}
+                  />
+                </main>
+            </Route>
+            {/* // регистрации пользователя */}
+            <Route exact path="/sign-up">
+              <p>регистрации пользователя</p>
+              <PageSignUp />
+            </Route>
+            {/* // авторизации пользователя */}
+            <Route exact path="/sign-in">
+              <p>авторизации пользователя</p>
+              <PageSignIn />
+            </Route>
+            {/* стр не найдена */}
+            <Route path='*'>
+              <PageNotFound />
+            </Route>
+        </Switch>
+        <Footer />
+        {/* /попап для картинки карточки */}
+        <ImagePopup onClose={closeAllPopups}
+          isOpen={isImagePopupOpen}
+          name={selectedCard.name}
+          link={selectedCard.link}
         />
-      </main>
-      <Footer />
-      {/* /попап для картинки карточки */}
-      <ImagePopup onClose={closeAllPopups}
-        isOpen={isImagePopupOpen}
-        name={selectedCard.name}
-        link={selectedCard.link}
-      />
-      {/* попап Редактировать профиль */}
-      <EditProfilePopup
-        isOpen={isEditProfilePopupOpen}
-        onClose={closeAllPopups}
-        onUpdateUser={handleUpdateUser}
-        IsSubmit={isSubmitting}
-      />
-      {/* попап добавления карточки       */}
-      <AddPlacePopup
-        onClose={closeAllPopups}
-        isOpen={isAddPlacePopupOpen}
-        onAddPlace={handleAddPlaceSubmit}
-        IsSubmit={isSubmitting}
-      />
-      {/* попап Обновить аватар       */}
-      <EditAvatarPopup
-        isOpen={isEditAvatarPopupOpen}
-        onClose={closeAllPopups}
-        onUpdateAvatar={handleUpdateAvatar}
-        IsSubmit={isSubmitting}
-      />
+        {/* попап Редактировать профиль */}
+        <EditProfilePopup
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
+          onUpdateUser={handleUpdateUser}
+          IsSubmit={isSubmitting}
+        />
+        {/* попап добавления карточки       */}
+        <AddPlacePopup
+          onClose={closeAllPopups}
+          isOpen={isAddPlacePopupOpen}
+          onAddPlace={handleAddPlaceSubmit}
+          IsSubmit={isSubmitting}
+        />
+        {/* попап Обновить аватар       */}
+        <EditAvatarPopup
+          isOpen={isEditAvatarPopupOpen}
+          onClose={closeAllPopups}
+          onUpdateAvatar={handleUpdateAvatar}
+          IsSubmit={isSubmitting}
+        />
 
-      {/* попап с удалением карточки */}
-      <PopupWithForm onClose={closeAllPopups}
-        isOpen={isConfirmPopupOpen}
-        title='Вы уверены?'
-        name='confirmation'
-        buttonText='Сохранить'
-      >
-      </PopupWithForm>
+        {/* попап с удалением карточки */}
+        <PopupWithForm onClose={closeAllPopups}
+          isOpen={isConfirmPopupOpen}
+          title='Вы уверены?'
+          name='confirmation'
+          buttonText='Сохранить'
+        >
+        </PopupWithForm>
 
-    </CurrentUserContext.Provider>
+      </CurrentUserContext.Provider>
   );
 }
 

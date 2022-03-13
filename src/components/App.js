@@ -241,9 +241,9 @@ function App() {
         </Route>
 
         {/* стр не найдена */}
-        {/* <Route path='*'>
+        <Route path='*'>
               <PageNotFound />
-            </Route> */}
+            </Route>
       </Switch>
 
       {/* /попап для успешной/не успешной регистрации */}

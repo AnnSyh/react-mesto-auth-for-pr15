@@ -1,20 +1,23 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Route, Switch, Redirect, useHistory } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import Main from './Main';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
+import InfoTooltip from './InfoTooltip';
 import api from '../utils/api.js';
 import PageNotFound from './PageNotFound';
-import PageSignUp from './PageSignUp';
-import PageSignIn from './PageSignIn';
+import Register from './Register';
+import Login from './Login';
 import CurrentUserContext from '../contexts/CurrentUserContext';
 
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
+
+import ProtectedRoute from './ProtectedRoute';
 
 
 function App() {
@@ -92,6 +95,7 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
   const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false)
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false)
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false)
    // ...(на submit)
  const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -110,6 +114,9 @@ function App() {
   const handleImagePopupOpen = () => {
     setIsImagePopupOpen(true)
   }
+  const handleInfoTooltipOpen = () => {
+    setIsInfoTooltipOpen(true)
+  }
 
   //открываем попап с картинкой
   const [selectedCard, setSelectedCard] = useState({});
@@ -126,6 +133,7 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsConfirmPopupOpen(false);
     setIsImagePopupOpen(false);
+    setIsInfoTooltipOpen(false);
   };
 
 // кнопка Escape
@@ -177,10 +185,38 @@ function App() {
       );
   }
 
+  //Регистрация
+  const [loggedIn, setLoggedIn] = useState(true)
+  const [userData, setUserData] = useState({
+    username: '',
+    email: '',
+  })
+  const history = useHistory();
+  
+  // useEffect(() => tokenCheck(), [])
+  useEffect(() => {
+    if (loggedIn) {
+      history.push('/sign-in');
+    }
+  }, [loggedIn])
+
   return (
       <CurrentUserContext.Provider value={currentUser}>
         <Header />
         <Switch>
+
+        <ProtectedRoute 
+          path="/sign-up" 
+          loggedIn={loggedIn} 
+          component={Register} 
+        />
+        <ProtectedRoute 
+          path="/sign-in" 
+          loggedIn={loggedIn} 
+          userData={userData} 
+          component={Login} 
+        />
+
             <Route exact path="/">
                 <main className="content">        
                   <Main
@@ -196,25 +232,35 @@ function App() {
                     handleCardDelete={handleCardDelete}
                   />
                 </main>
+                <Footer />
             </Route>
-            {/* // регистрации пользователя */}
+
             <Route exact path="/sign-up">
-              <p>регистрации пользователя</p>
-              <PageSignUp />
+              <Register />
             </Route>
-            {/* // авторизации пользователя */}
             <Route exact path="/sign-in">
-              <p>авторизации пользователя</p>
-              <PageSignIn />
-            </Route>
+              <Login />
+            </Route> 
+
+            {/* <Route exact path="/">
+              {loggedIn ? ( <Redirect to="/" />) : (<Redirect to="/sign-in" />)}
+            </Route> */}
+
             {/* стр не найдена */}
-            <Route path='*'>
+            {/* <Route path='*'>
               <PageNotFound />
-            </Route>
+            </Route> */}
         </Switch>
-        <Footer />
+       
+        {/* /попап для успешной/не успешной регистрации */}
+        <InfoTooltip 
+          onClose={closeAllPopups}
+          isOpen={isInfoTooltipOpen}
+        />
+ 
         {/* /попап для картинки карточки */}
-        <ImagePopup onClose={closeAllPopups}
+        <ImagePopup 
+          onClose={closeAllPopups}
           isOpen={isImagePopupOpen}
           name={selectedCard.name}
           link={selectedCard.link}

@@ -1,13 +1,19 @@
 import React from 'react';
 import headerLogo from '../images/header-logo.svg';
+import Navbar from '../components/NavBar';
+import { Link } from 'react-router-dom';
 
 function Header() {
   return (
 
     <header className="header section page__header">
-      <img  className="logo"
-            src={headerLogo}
-            alt="логотип Mesto" />
+      <Link to="/" className="">
+        <img  className="logo"
+              src={headerLogo}
+              alt="логотип Mesto" />
+      </Link>
+
+      <Navbar/>
     </header>
 
   );

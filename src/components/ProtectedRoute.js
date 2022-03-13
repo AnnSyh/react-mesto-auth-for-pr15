@@ -7,7 +7,6 @@ const ProtectedRoute = ({ component: Component, ...props }) => {
 
 console.log('component = ', Component);
 console.log('props = ', props);
-console.log('props = ', props);
 
   return (
     <Route>

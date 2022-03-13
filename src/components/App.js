@@ -22,7 +22,7 @@ import ProtectedRoute from './ProtectedRoute';
 
 function App() {
   const [cards, setCards] = useState([]);
-//получаем массив карточек
+  //получаем массив карточек
   useEffect(() => {
     api
       .getInitialCards()
@@ -70,14 +70,14 @@ function App() {
       })
       .catch((err) => console.log(err))
       .finally(
-        () =>{
+        () => {
           setIsSubmitting(false);
           // buttonText = "Сохранить";
         }
       );
   }
 
-//  Отправляем запрос в API и устанавливаем текущего юзера
+  //  Отправляем запрос в API и устанавливаем текущего юзера
   const [currentUser, setCurrentUser] = useState({});
   useEffect(() => {
     api
@@ -89,15 +89,15 @@ function App() {
   }, []);
 
 
-// открытие всплывающих попапов
+  // открытие всплывающих попапов
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
   const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false)
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false)
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false)
-   // ...(на submit)
- const [isSubmitting, setIsSubmitting] = useState(false);
+  // ...(на submit)
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true)
@@ -136,7 +136,7 @@ function App() {
     setIsInfoTooltipOpen(false);
   };
 
-// кнопка Escape
+  // кнопка Escape
   useEffect(() => {
     const closeByEscape = (e) => {
       if (e.key === 'Escape') {
@@ -145,7 +145,7 @@ function App() {
     }
     document.addEventListener('keydown', closeByEscape)
     return () => document.removeEventListener('keydown', closeByEscape)
-}, [])
+  }, [])
 
   // Функция обновления пользователя 
   function handleUpdateUser(user) {
@@ -159,7 +159,7 @@ function App() {
       })
       .catch((err) => console.log(err))
       .finally(
-        () =>{
+        () => {
           setIsSubmitting(false);
           // buttonText = "Сохранить";
         }
@@ -178,7 +178,7 @@ function App() {
       })
       .catch((err) => console.log(err))
       .finally(
-        () =>{
+        () => {
           setIsSubmitting(false);
           // buttonText = "Сохранить";
         }
@@ -186,13 +186,13 @@ function App() {
   }
 
   //Регистрация
-  const [loggedIn, setLoggedIn] = useState(true)
+  const [loggedIn, setLoggedIn] = useState(false)
   const [userData, setUserData] = useState({
     username: '',
     email: '',
   })
   const history = useHistory();
-  
+
   // useEffect(() => tokenCheck(), [])
   useEffect(() => {
     if (loggedIn) {
@@ -201,102 +201,96 @@ function App() {
   }, [loggedIn])
 
   return (
-      <CurrentUserContext.Provider value={currentUser}>
-        <Header />
-        <Switch>
+    <CurrentUserContext.Provider value={currentUser}>
+      <Header />
+      <Switch>
 
-        <ProtectedRoute 
-          path="/sign-up" 
-          loggedIn={loggedIn} 
-          component={Register} 
-        />
-        <ProtectedRoute 
-          path="/sign-in" 
-          loggedIn={loggedIn} 
-          userData={userData} 
-          component={Login} 
+        <ProtectedRoute
+          path="/main"
+          loggedIn={loggedIn}
+          component={Main}
         />
 
-            <Route exact path="/">
-                <main className="content">        
-                  <Main
-                    handleEditAvatarClick={handleEditAvatarClick}
-                    handleEditProfileClick={handleEditProfileClick}
-                    handleAddPlaceClick={handleAddPlaceClick}
-                    handleConfirmClick={handleConfirmClick}
-                    handleImagePopupOpen={handleImagePopupOpen}
-                    handleCardClick={handleCardClick}
+        <Route exact path="/main">
+          <main className="content">
+            <Main
+              handleEditAvatarClick={handleEditAvatarClick}
+              handleEditProfileClick={handleEditProfileClick}
+              handleAddPlaceClick={handleAddPlaceClick}
+              handleConfirmClick={handleConfirmClick}
+              handleImagePopupOpen={handleImagePopupOpen}
+              handleCardClick={handleCardClick}
 
-                    cards={cards}
-                    handleCardLike={handleCardLike}
-                    handleCardDelete={handleCardDelete}
-                  />
-                </main>
-                <Footer />
-            </Route>
+              cards={cards}
+              handleCardLike={handleCardLike}
+              handleCardDelete={handleCardDelete}
+            />
+          </main>
+          <Footer />
+        </Route>
 
-            <Route exact path="/sign-up">
-              <Register />
-            </Route>
-            <Route exact path="/sign-in">
-              <Login />
-            </Route> 
+        <Route exact path="/sign-up">
+          <Register />
+        </Route>
+        <Route exact path="/sign-in">
+          <Login />
+        </Route>
 
-            {/* <Route exact path="/">
-              {loggedIn ? ( <Redirect to="/" />) : (<Redirect to="/sign-in" />)}
-            </Route> */}
+        <Route exact path="/">
+          {loggedIn ? (<Redirect to="/" />) : (<Redirect to="/sign-in" />)}
+        </Route>
 
-            {/* стр не найдена */}
-            {/* <Route path='*'>
+        {/* стр не найдена */}
+        {/* <Route path='*'>
               <PageNotFound />
             </Route> */}
-        </Switch>
-       
-        {/* /попап для успешной/не успешной регистрации */}
-        <InfoTooltip 
-          onClose={closeAllPopups}
-          isOpen={isInfoTooltipOpen}
-        />
- 
-        {/* /попап для картинки карточки */}
-        <ImagePopup 
-          onClose={closeAllPopups}
-          isOpen={isImagePopupOpen}
-          name={selectedCard.name}
-          link={selectedCard.link}
-        />
-        {/* попап Редактировать профиль */}
-        <EditProfilePopup
-          isOpen={isEditProfilePopupOpen}
-          onClose={closeAllPopups}
-          onUpdateUser={handleUpdateUser}
-          IsSubmit={isSubmitting}
-        />
-        {/* попап добавления карточки       */}
-        <AddPlacePopup
-          onClose={closeAllPopups}
-          isOpen={isAddPlacePopupOpen}
-          onAddPlace={handleAddPlaceSubmit}
-          IsSubmit={isSubmitting}
-        />
-        {/* попап Обновить аватар       */}
-        <EditAvatarPopup
-          isOpen={isEditAvatarPopupOpen}
-          onClose={closeAllPopups}
-          onUpdateAvatar={handleUpdateAvatar}
-          IsSubmit={isSubmitting}
-        />
+      </Switch>
 
-        {/* попап с удалением карточки */}
-        <PopupWithForm onClose={closeAllPopups}
-          isOpen={isConfirmPopupOpen}
-          title='Вы уверены?'
-          name='confirmation'
-          buttonText='Сохранить'
-        >
-        </PopupWithForm>
+      {/* /попап для успешной/не успешной регистрации */}
+      <InfoTooltip
+        onClose={closeAllPopups}
+        isOpen={isInfoTooltipOpen}
+      />
 
-      </CurrentUserContext.Provider>
+      {/* /попап для картинки карточки */}
+      <ImagePopup
+        onClose={closeAllPopups}
+        isOpen={isImagePopupOpen}
+        name={selectedCard.name}
+        link={selectedCard.link}
+      />
+      {/* попап Редактировать профиль */}
+      <EditProfilePopup
+        isOpen={isEditProfilePopupOpen}
+        onClose={closeAllPopups}
+        onUpdateUser={handleUpdateUser}
+        IsSubmit={isSubmitting}
+      />
+      {/* попап добавления карточки       */}
+      <AddPlacePopup
+        onClose={closeAllPopups}
+        isOpen={isAddPlacePopupOpen}
+        onAddPlace={handleAddPlaceSubmit}
+        IsSubmit={isSubmitting}
+      />
+      {/* попап Обновить аватар       */}
+      <EditAvatarPopup
+        isOpen={isEditAvatarPopupOpen}
+        onClose={closeAllPopups}
+        onUpdateAvatar={handleUpdateAvatar}
+        IsSubmit={isSubmitting}
+      />
+
+      {/* попап с удалением карточки */}
+      <PopupWithForm onClose={closeAllPopups}
+        isOpen={isConfirmPopupOpen}
+        title='Вы уверены?'
+        name='confirmation'
+        buttonText='Сохранить'
+      >
+      </PopupWithForm>
+
+    </CurrentUserContext.Provider>
   );
 }
 

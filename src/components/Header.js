@@ -7,7 +7,7 @@ function Header() {
   return (
 
     <header className="header section page__header">
-      <Link to="/" className="">
+      <Link to="/main" className="">
         <img  className="logo"
               src={headerLogo}
               alt="логотип Mesto" />

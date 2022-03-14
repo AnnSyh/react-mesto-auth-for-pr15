@@ -3,7 +3,9 @@ import headerLogo from '../images/header-logo.svg';
 import Navbar from '../components/NavBar';
 import { Link } from 'react-router-dom';
 
-function Header() {
+
+function Header(props) {
+
   return (
 
     <header className="header section page__header">
@@ -13,7 +15,7 @@ function Header() {
               alt="логотип Mesto" />
       </Link>
 
-      <Navbar/>
+      <Navbar loggedIn={props.loggedIn}/>
     </header>
 
   );

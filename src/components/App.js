@@ -186,8 +186,9 @@ function App() {
   }
 
   //Регистрация
-  const [loggedIn, setLoggedIn] = useState(false)
-  // const [loggedIn, setLoggedIn] = useState(true)
+  // const [loggedIn, setLoggedIn] = useState(false)
+  const [loggedIn, setLoggedIn] = useState(true)
+
   const [userData, setUserData] = useState({
     username: '',
     email: '',
@@ -203,7 +204,7 @@ function App() {
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <Header />
+      <Header loggedIn={loggedIn} />
       <Switch>
       <Route exact path="/sign-up">
           <Register />

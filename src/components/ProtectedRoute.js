@@ -11,7 +11,8 @@ console.log('props = ', props);
   return (
     <Route>
       {
-      () => props.loggedIn === true ? <Component {...props} /> : <Redirect to="./sign-in" />
+      () => props.loggedIn === true 
+      ? <Component {...props} /> : <Redirect to="./sign-in" />
       }
     </Route>
   );

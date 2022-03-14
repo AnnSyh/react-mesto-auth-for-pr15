@@ -187,6 +187,7 @@ function App() {
 
   //Регистрация
   const [loggedIn, setLoggedIn] = useState(false)
+  // const [loggedIn, setLoggedIn] = useState(true)
   const [userData, setUserData] = useState({
     username: '',
     email: '',
@@ -204,41 +205,33 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <Header />
       <Switch>
-
-        <ProtectedRoute
-          path="/main"
-          loggedIn={loggedIn}
-          component={Main}
-        />
-
-        <Route exact path="/main">
-          <main className="content">
-            <Main
-              handleEditAvatarClick={handleEditAvatarClick}
-              handleEditProfileClick={handleEditProfileClick}
-              handleAddPlaceClick={handleAddPlaceClick}
-              handleConfirmClick={handleConfirmClick}
-              handleImagePopupOpen={handleImagePopupOpen}
-              handleCardClick={handleCardClick}
-
-              cards={cards}
-              handleCardLike={handleCardLike}
-              handleCardDelete={handleCardDelete}
-            />
-          </main>
-          <Footer />
-        </Route>
-
-        <Route exact path="/sign-up">
+      <Route exact path="/sign-up">
           <Register />
         </Route>
         <Route exact path="/sign-in">
           <Login />
         </Route>
 
-        <Route exact path="/">
-          {loggedIn ? (<Redirect to="/" />) : (<Redirect to="/sign-in" />)}
-        </Route>
+        <ProtectedRoute 
+          exact path="/" 
+          loggedIn={loggedIn} 
+          component={Main}
+
+          handleEditAvatarClick={handleEditAvatarClick}
+          handleEditProfileClick={handleEditProfileClick}
+          handleAddPlaceClick={handleAddPlaceClick}
+          handleConfirmClick={handleConfirmClick}
+          handleImagePopupOpen={handleImagePopupOpen}
+          handleCardClick={handleCardClick}
+
+          cards={cards}
+          handleCardLike={handleCardLike}
+          handleCardDelete={handleCardDelete}
+
+          >
+
+          <Footer />
+        </ProtectedRoute>
 
         {/* стр не найдена */}
         <Route path='*'>

@@ -202,6 +202,8 @@ function App() {
     }
   }, [loggedIn])
 
+  const [isSuccessRegister, setIsSuccessRegister] = React.useState(false);
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <Header loggedIn={loggedIn} />
@@ -244,6 +246,7 @@ function App() {
       <InfoTooltip
         onClose={closeAllPopups}
         isOpen={isInfoTooltipOpen}
+        isSucces={isSuccessRegister}
       />
 
       {/* /попап для картинки карточки */}

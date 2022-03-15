@@ -15,7 +15,7 @@ function Header(props) {
               alt="логотип Mesto" />
       </Link>
 
-      <Navbar loggedIn={props.loggedIn}/>
+      <Navbar loggedIn={props.loggedIn} />
     </header>
 
   );

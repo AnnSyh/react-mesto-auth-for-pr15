@@ -11,7 +11,7 @@ function PageSignIn(props) {
       const currentUser = React.useContext(CurrentUserContext);
 
   function handleSubmit(evt) {
-    console.log('ImagePopup');
+    console.log('PageSignIn');
 
     evt.preventDefault(evt);
 

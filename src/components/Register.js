@@ -4,11 +4,25 @@ import PopupWithForm from './PopupWithForm';
 import { Link } from 'react-router-dom';
 
 
-function Register() {
-
+function Register({ handleRegister }) {
+  const [registerData, setRegisterData] = useState({
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+  const [ message, setMessage ] = useState('');
+  const { username, email, password, confirmPassword } = registerData;
+  function handleChange(e) {
+    const {name, value} = e.target;
+    setRegisterData({
+      ...registerData,
+      [name]: value
+    });
+  }
   function handleSubmit(evt) {
+    console.log('Register');
     evt.preventDefault(evt);
-    
 
   }
   
@@ -31,6 +45,8 @@ function Register() {
               required 
               minLength="2" 
               maxLength="30" 
+              value={email}
+              onChange={handleChange}
           />
           <span className="popup__input-error place-title-input-error"></span>
         
@@ -43,6 +59,8 @@ function Register() {
             name="pass" 
             required 
             type="pass" 
+            value={password}
+            onChange={handleChange}
           />
         <span className="popup__input-error place-title-input-error"></span>
         </div>

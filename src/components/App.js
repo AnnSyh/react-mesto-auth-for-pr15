@@ -186,8 +186,8 @@ function App() {
   }
 
   //Регистрация
-  // const [loggedIn, setLoggedIn] = useState(false)
-  const [loggedIn, setLoggedIn] = useState(true)
+  const [loggedIn, setLoggedIn] = useState(false)
+  // const [loggedIn, setLoggedIn] = useState(true)
 
   const [userData, setUserData] = useState({
     username: '',
@@ -202,6 +202,36 @@ function App() {
     }
   }, [loggedIn])
 
+  function handleLogin(username, password){
+    // return duckAuth.authorize(username, password)
+    //     .then((data) => {
+    //       if (!data){
+    //         throw new Error('Что-то пошло не так!');
+    //       }
+    //       if (data.jwt){
+    //         const { user: { username, email } } = data;
+    //         const userData = { username, email }
+    //         // test: "hello"
+    //         localStorage.setItem('jwt', data.jwt);
+    //         setUserData(userData)
+    //         setLoggedIn(true)
+    //       }
+    //     })
+  }
+  function handleRegister(username, password, email) {
+    // return duckAuth.register(username, password, email).then((res) => {
+    //   const { statusCode, jwt } = res;
+    //   if (jwt) {
+    //     history.push('/login');
+    //   } else if (statusCode === 400) {
+    //     const { message } = res.message[0].messages[0]
+    //     throw new Error(message)
+    //   } else {
+    //     throw new Error('Что-то пошло не так!')
+    //   }
+    // });
+  }
+
   const [isSuccessRegister, setIsSuccessRegister] = React.useState(false);
 
   return (
@@ -209,10 +239,10 @@ function App() {
       <Header loggedIn={loggedIn} />
       <Switch>
       <Route exact path="/sign-up">
-          <Register />
+          <Register  handleRegister={handleRegister} />
         </Route>
         <Route exact path="/sign-in">
-          <Login />
+          <Login handleLogin={handleLogin}  />
         </Route>
 
         <ProtectedRoute 

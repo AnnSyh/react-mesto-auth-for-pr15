@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, useHistory } from 'react-router-dom';
+import {  Route, NavLink, useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 function NavBar(props) {
@@ -9,6 +9,10 @@ function NavBar(props) {
     history.push('/sign-in');
   }
 
+  console.log('props = ',props);
+  console.log('history = ',history);
+  console.log('history.location = ',history.location);
+
   return (
     <nav className="menu">
       {/* { props.loggedIn  ? <p>залогинены</p> : <p>не залогинены </p>} */}
@@ -16,13 +20,16 @@ function NavBar(props) {
       {props.loggedIn ? (
         <>
           <NavLink exact to="/"  activeClassName="menu__item_active" className="menu__item">На гл стр</NavLink>
-          {/* <NavLink exact to="/"  activeClassName="menu__item_active" className="menu__item">Выход</NavLink> */}
           <button onClick={signOut} className="menu__item menu__button">Выйти</button>
         </>
       ) : ( 
         <>
-          <NavLink to="/sign-in" activeClassName="menu__item_active" className="menu__item">Авторизация</NavLink>
-          <NavLink to="/sign-up" activeClassName="menu__item_active" className="menu__item">Регистрация</NavLink>
+          <Route path="/sign-in">
+            <NavLink to="/sign-up" activeClassName="menu__item_active" className="menu__item">Регистрация</NavLink>
+          </Route>
+          <Route path="/sign-up">
+            <NavLink to="/sign-in" activeClassName="menu__item_active" className="menu__item">Авторизация</NavLink>
+          </Route>
         </>
        )}
     </nav>

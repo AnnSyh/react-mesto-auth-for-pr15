@@ -203,6 +203,7 @@ function App() {
   }, [loggedIn])
 
   function handleLogin(username, password){
+    console.log('handleLogin');
     // return duckAuth.authorize(username, password)
     //     .then((data) => {
     //       if (!data){
@@ -219,6 +220,7 @@ function App() {
     //     })
   }
   function handleRegister(username, password, email) {
+    console.log('handleRegister1111');
     // return duckAuth.register(username, password, email).then((res) => {
     //   const { statusCode, jwt } = res;
     //   if (jwt) {
@@ -239,7 +241,10 @@ function App() {
       <Header loggedIn={loggedIn} />
       <Switch>
       <Route exact path="/sign-up">
-          <Register  handleRegister={handleRegister} />
+          <Register  
+            handleRegister={handleRegister} 
+            handleInfoTooltipOpen={handleInfoTooltipOpen}
+          />
         </Route>
         <Route exact path="/sign-in">
           <Login handleLogin={handleLogin}  />

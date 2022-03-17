@@ -5,9 +5,6 @@ import { Route, Redirect } from "react-router-dom";
 // он также может взять неограниченное число пропсов и передать их новому компоненту
 const ProtectedRoute = ({ component: Component, ...props }) => {
 
-console.log('component = ', Component);
-console.log('props = ', props);
-
   return (
     <Route>
       {

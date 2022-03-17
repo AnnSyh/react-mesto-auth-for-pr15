@@ -2,16 +2,17 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import PopupWithForm from './PopupWithForm';
 import { Link } from 'react-router-dom';
+import InfoTooltip from './InfoTooltip'
 import CurrentUserContext from '../contexts/CurrentUserContext';
 
 
-function PageSignIn(props) {
+function Login(props) {
 
       // Подписываемся на контекст CurrentUserContext
       const currentUser = React.useContext(CurrentUserContext);
 
   function handleSubmit(evt) {
-    console.log('PageSignIn');
+    console.log('Login');
 
     evt.preventDefault(evt);
 
@@ -64,4 +65,4 @@ function PageSignIn(props) {
   );
 }
 
-export default PageSignIn;
+export default Login;

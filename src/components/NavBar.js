@@ -9,10 +9,6 @@ function NavBar(props) {
     history.push('/sign-in');
   }
 
-  console.log('props = ',props);
-  console.log('history = ',history);
-  console.log('history.location = ',history.location);
-
   return (
     <nav className="menu">
       {/* { props.loggedIn  ? <p>залогинены</p> : <p>не залогинены </p>} */}

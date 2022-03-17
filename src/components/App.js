@@ -220,7 +220,7 @@ function App() {
     //     })
   }
   function handleRegister(username, password, email) {
-    console.log('handleRegister1111');
+    console.log('handleRegister');
     // return duckAuth.register(username, password, email).then((res) => {
     //   const { statusCode, jwt } = res;
     //   if (jwt) {

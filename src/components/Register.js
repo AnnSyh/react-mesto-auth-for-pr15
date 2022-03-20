@@ -2,34 +2,33 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import PopupWithForm from './PopupWithForm';
 import { Link } from 'react-router-dom';
+import * as auth from '../utils/auth';
 
 
-function Register(props) {
+function Register({ handleRegister }) {
 
-console.log('Register: props.handleRegister = ',props.handleRegister);
-console.log('Register: props.handleCardClick = ',props.handleCardClick);
+console.log('Register: handleRegister = ',handleRegister);
 
   const [registerData, setRegisterData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
+    password: 'aaa@email.ru',
+    email: 'dsfsdfsdfsdf',
   });
   const [ message, setMessage ] = useState('');
-  const { username, email, password, confirmPassword } = registerData;
+  const { email, password } = registerData;
   function handleChange(e) {
-    const {name, value} = e.target;
+    const {email, value} = e.target;
     setRegisterData({
       ...registerData,
-      [name]: value
+      [email]: value
     });
   }
   function handleSubmit(evt) {
-    console.log('Register');
+    console.log('handleSubmit Register');
     evt.preventDefault(evt);
-
-    
-
+    if (password){
+      handleRegister(password, email)
+          .catch((e) => setMessage(e.message))
+    }
   }
   
   return (
@@ -51,7 +50,7 @@ console.log('Register: props.handleCardClick = ',props.handleCardClick);
               required 
               minLength="2" 
               maxLength="30" 
-              // value={email}  
+              value={email}  
               onChange={handleChange}
           />
           <span className="popup__input-error place-title-input-error"></span>
@@ -65,19 +64,20 @@ console.log('Register: props.handleCardClick = ',props.handleCardClick);
             name="pass" 
             required 
             type="pass" 
-            // value={password}
+            value={password}
             onChange={handleChange}
           />
         <span className="popup__input-error place-title-input-error"></span>
         </div>
       </div>
       <div className="form__field m-0">
-        <button className="popup__btn"
-                          name="btn"
-                          onClick={props.handleCardClick}
-                          type="submit">Зарегистрироваться</button>
+        <button 
+            className="popup__btn"
+            name="btn"
+            type="submit"
+        >Зарегистрироваться</button>
 
-      <button onClick={props.handleCardClick}>окошко успешной/не успешной регистрации</button>
+      {/* <button onClick={handleCardClick}>окошко успешной/не успешной регистрации</button> */}
                          
        <div className="link text-center">
         Уже зарегистрированы? <Link to="/sign-in" className="link"> Войти</Link>

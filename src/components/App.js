@@ -19,6 +19,8 @@ import AddPlacePopup from './AddPlacePopup';
 
 import ProtectedRoute from './ProtectedRoute';
 
+import * as auth from '../utils/auth';
+
 
 function App() {
   const [cards, setCards] = useState([]);
@@ -195,43 +197,57 @@ function App() {
   })
   const history = useHistory();
 
-  // useEffect(() => tokenCheck(), [])
+  useEffect(() => tokenCheck(), [])
   useEffect(() => {
+    debugger
     if (loggedIn) {
-      history.push('/sign-in');
+      history.push('/');
     }
   }, [loggedIn])
 
   function handleLogin(username, password){
-    console.log('handleLogin');
-    // return duckAuth.authorize(username, password)
-    //     .then((data) => {
-    //       if (!data){
-    //         throw new Error('Что-то пошло не так!');
-    //       }
-    //       if (data.jwt){
-    //         const { user: { username, email } } = data;
-    //         const userData = { username, email }
-    //         // test: "hello"
-    //         localStorage.setItem('jwt', data.jwt);
-    //         setUserData(userData)
-    //         setLoggedIn(true)
-    //       }
-    //     })
+    return auth.authorize(username, password)
+        .then((data) => {
+          if (!data){
+            throw new Error('Что-то пошло не так!');
+          }
+          if (data.jwt){
+            const { user: { username, email } } = data;
+            const userData = { username, email }
+            // test: "hello"
+            localStorage.setItem('jwt', data.jwt);
+            setUserData(userData)
+            setLoggedIn(true)
+          }
+        })
   }
-  function handleRegister(username, password, email) {
-    console.log('handleRegister');
-    // return duckAuth.register(username, password, email).then((res) => {
-    //   const { statusCode, jwt } = res;
-    //   if (jwt) {
-    //     history.push('/login');
-    //   } else if (statusCode === 400) {
-    //     const { message } = res.message[0].messages[0]
-    //     throw new Error(message)
-    //   } else {
-    //     throw new Error('Что-то пошло не так!')
-    //   }
-    // });
+  function handleRegister( password, email) {
+    return auth.register(password, email).then((res) => {
+      const { statusCode, jwt } = res;
+      if (jwt) {
+        history.push('/sign-in');
+      } else if (statusCode === 400) {
+        const { message } = res.message[0].messages[0]
+        throw new Error(message)
+      } else {
+        throw new Error('Что-то пошло не так!')
+      }
+    });
+  }
+  const tokenCheck = () => {
+    if (localStorage.getItem('jwt')){
+      let jwt = localStorage.getItem('jwt');
+      auth.getContent(jwt).then((res) => {
+        if (res){
+          const { username, email } = res;
+          const userData = { username, email }
+          localStorage.setItem('jwt', res.jwt);
+          setUserData(userData)
+          setLoggedIn(true)
+          history.push('/');
+        }
+      });
+    }
   }
 
   const [isSuccessRegister, setIsSuccessRegister] = React.useState(false);
@@ -241,9 +257,12 @@ function App() {
       <Header loggedIn={loggedIn} />
       <Switch>
       <Route exact path="/sign-up">
-          <Register  
+          {/* <Register  
             handleRegister={handleRegister} 
             handleInfoTooltipOpen={handleInfoTooltipOpen}
+          /> */}
+          <Register  
+            handleRegister={handleRegister} 
           />
         </Route>
         <Route exact path="/sign-in">

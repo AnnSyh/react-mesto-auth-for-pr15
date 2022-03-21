@@ -199,7 +199,6 @@ function App() {
 
   useEffect(() => tokenCheck(), [])
   useEffect(() => {
-    debugger
     if (loggedIn) {
       history.push('/');
     }
@@ -211,12 +210,15 @@ function App() {
           if (!data){
             throw new Error('Что-то пошло не так!');
           }
-          if (data.jwt){
-            const { user: { username, email } } = data;
-            const userData = { username, email }
-            // test: "hello"
-            localStorage.setItem('jwt', data.jwt);
-            setUserData(userData)
+          if (data.token){
+
+console.log('data = ',data);
+debugger
+            // const { user: { username, email } } = data;
+            // const userData = { username, email }
+            // // test: "hello"
+            localStorage.setItem('token', data.token);
+            // setUserData(userData)  
             setLoggedIn(true)
           }
         })

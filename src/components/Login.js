@@ -10,9 +10,6 @@ import * as auth from '../utils/auth';
   // const currentUser = React.useContext(CurrentUserContext);
 
   const Login = ({ handleLogin }) => {
-
-console.log('handleLogin= ',handleLogin,);
-
     const [userData, setUserState] = useState({
       password: 'dsfsdfsdfsdf',
       mail: 'aaa@email.ru',
@@ -32,7 +29,6 @@ console.log('handleLogin= ',handleLogin,);
       if (!mail || !password){
         return;
       }
-      debugger
       handleLogin(mail, password)
           .catch((e) => this.setState({ message: e.message }))
     }

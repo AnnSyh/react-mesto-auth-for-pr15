@@ -6,11 +6,8 @@ import * as auth from '../utils/auth';
 
 
 function Register({ handleRegister }) {
-
-console.log('Register: handleRegister = ',handleRegister);
-
   const [registerData, setRegisterData] = useState({
-    password: 'aaa@email.ru',
+    password: 'bbb@email.ru',
     email: 'dsfsdfsdfsdf',
   });
   const [ message, setMessage ] = useState('');

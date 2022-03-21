@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 function NavBar(props) {
   const history = useHistory();
   function signOut(){
-    localStorage.removeItem('jwt');
+    localStorage.removeItem('token');
     history.push('/sign-in');
   }
 
@@ -15,7 +15,7 @@ function NavBar(props) {
 
       {props.loggedIn ? (
         <>
-          <NavLink exact to="/"  activeClassName="menu__item_active" className="menu__item">На гл стр</NavLink>
+          <span>{localStorage.email}</span>
           <button onClick={signOut} className="menu__item menu__button">Выйти</button>
         </>
       ) : ( 

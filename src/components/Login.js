@@ -12,7 +12,7 @@ import * as auth from '../utils/auth';
   const Login = ({ handleLogin }) => {
     const [userData, setUserState] = useState({
       password: 'dsfsdfsdfsdf',
-      mail: 'aaa@email.ru',
+      mail: 'bbb@email.ru',
     });
     const { mail, password } = userData
     const [message, setMessage ] = useState('')

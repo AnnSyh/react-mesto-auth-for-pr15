@@ -204,6 +204,7 @@ function App() {
     }
   }, [loggedIn])
 
+
   function handleLogin(username, password){
     return auth.authorize(username, password)
         .then((data) => {
@@ -213,20 +214,23 @@ function App() {
           if (data.token){
 
 console.log('data = ',data);
+console.log('username = ',username);
 debugger
             // const { user: { username, email } } = data;
             // const userData = { username, email }
-            // // test: "hello"
             localStorage.setItem('token', data.token);
+            localStorage.setItem('email', data.token.email);
             // setUserData(userData)  
             setLoggedIn(true)
           }
         })
   }
+
+
   function handleRegister( password, email) {
     return auth.register(password, email).then((res) => {
-      const { statusCode, jwt } = res;
-      if (jwt) {
+      const { statusCode, token } = res;
+      if (token) {
         history.push('/sign-in');
       } else if (statusCode === 400) {
         const { message } = res.message[0].messages[0]
@@ -236,15 +240,29 @@ debugger
       }
     });
   }
+
+   //Функция проверки токена в локальном хранилище
   const tokenCheck = () => {
-    if (localStorage.getItem('jwt')){
-      let jwt = localStorage.getItem('jwt');
-      auth.getContent(jwt).then((res) => {
+    //Получаем токен из локального хранилища
+    const token = localStorage.getItem('token');
+    console.log('tokenCheck;  token = ',token);
+    // debugger
+console.log('tokenCheck: localStorage.getItem(token) = ', localStorage.getItem('token'));
+
+    if (localStorage.getItem('token')){
+
+      auth.getContent(token).then((res) => {
         if (res){
-          const { username, email } = res;
-          const userData = { username, email }
-          localStorage.setItem('jwt', res.jwt);
-          setUserData(userData)
+          // console.log('tokenCheck;  res = ',res);
+          // console.log('tokenCheck;  res.data = ',res.data);
+          // console.log('tokenCheck;  res.data.email = ',res.data.email);
+          // console.log('tokenCheck;  res.data._id = ',res.data._id);
+          // console.log('tokenCheck;  username = ',username);
+          // const { username, email } = res;
+          // const userData = { username, email }
+          localStorage.setItem('token', res.token);
+          localStorage.setItem('email', res.data.email);
+          // setUserData(userData)
           setLoggedIn(true)
           history.push('/');
         }

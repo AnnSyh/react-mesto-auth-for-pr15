@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom';
 import * as auth from '../utils/auth';
 
 
-function Register({ handleRegister }) {
+function Register({ handleRegister, handleInfoTooltipOpen }) {
   const [registerData, setRegisterData] = useState({
-    password: 'bbb@email.ru',
+    password: 'wwbbb@email.ru',
     email: 'dsfsdfsdfsdf',
   });
   const [ message, setMessage ] = useState('');
@@ -74,7 +74,7 @@ function Register({ handleRegister }) {
             type="submit"
         >Зарегистрироваться</button>
 
-      {/* <button onClick={handleCardClick}>окошко успешной/не успешной регистрации</button> */}
+      <button onClick={handleInfoTooltipOpen}>окошко успешной/не успешной регистрации</button>
                          
        <div className="link text-center">
         Уже зарегистрированы? <Link to="/sign-in" className="link"> Войти</Link>

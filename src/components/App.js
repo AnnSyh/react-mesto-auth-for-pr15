@@ -277,13 +277,13 @@ console.log('tokenCheck: localStorage.getItem(token) = ', localStorage.getItem('
       <Header loggedIn={loggedIn} />
       <Switch>
       <Route exact path="/sign-up">
-          {/* <Register  
-            handleRegister={handleRegister} 
-            handleInfoTooltipOpen={handleInfoTooltipOpen}
-          /> */}
           <Register  
             handleRegister={handleRegister} 
+            handleInfoTooltipOpen={handleInfoTooltipOpen}
           />
+          {/* <Register  
+            handleRegister={handleRegister} 
+          /> */}
         </Route>
         <Route exact path="/sign-in">
           <Login handleLogin={handleLogin}  />

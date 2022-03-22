@@ -5,6 +5,9 @@ const handleResponse = response => response.ok ? response.json() : Promise.rejec
 
 //Функция регистрация пользователя
 export const register = (email, password) => {
+
+  debugger
+
   return fetch(`${BASE_URL}/signup`, {
     method: 'POST',
     headers: {
@@ -13,7 +16,8 @@ export const register = (email, password) => {
     },
     body: JSON.stringify({email, password})
   })
-    .then(handleResponse)
+  .then((response) => response.json())
+  // .then(handleResponse)
 };
 
 //Функция авторизация пользователя

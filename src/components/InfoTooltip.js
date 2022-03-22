@@ -23,7 +23,7 @@ function InfoTooltip(props) {
             <img className="popup__img popup__img_icon"
                     src={checkedIcon}
                     alt='checked' />
-            <h2 class="page-title popup__page-title  text-overflow">Вы успешно зарегистрировались!</h2>
+            <h2 className="page-title popup__page-title  text-overflow">Вы успешно зарегистрировались!</h2>
           </div>
       </PopupWithOutForm>
 

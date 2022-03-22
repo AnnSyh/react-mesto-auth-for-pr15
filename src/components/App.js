@@ -219,7 +219,7 @@ debugger
             // const { user: { username, email } } = data;
             // const userData = { username, email }
             localStorage.setItem('token', data.token);
-            localStorage.setItem('email', data.token.email);
+            localStorage.setItem('email', username);
             // setUserData(userData)  
             setLoggedIn(true)
           }
@@ -227,16 +227,18 @@ debugger
   }
 
 
-  function handleRegister( password, email) {
-    return auth.register(password, email).then((res) => {
+  function handleRegister( email, password ) {
+    console.log('App:  handleRegister');
+
+    return auth.register(email, password).then((res) => {
       const { statusCode, token } = res;
       if (token) {
         history.push('/sign-in');
       } else if (statusCode === 400) {
-        const { message } = res.message[0].messages[0]
+        let { message } = res.message[0].messages[0]
         throw new Error(message)
       } else {
-        throw new Error('Что-то пошло не так!')
+        throw new Error(res.error)
       }
     });
   }

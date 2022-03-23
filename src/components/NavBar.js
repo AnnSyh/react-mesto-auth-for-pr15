@@ -5,7 +5,11 @@ import { Link } from 'react-router-dom';
 function NavBar(props) {
   const history = useHistory();
   function signOut(){
+
+    debugger
     localStorage.removeItem('token');
+    // localStorage.clear();
+    debugger
     history.push('/sign-in');
   }
 

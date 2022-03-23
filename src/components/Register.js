@@ -1,29 +1,31 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import PopupWithForm from './PopupWithForm';
-import { Link } from 'react-router-dom';
+import { Link, withRouter, useHistory } from "react-router-dom";
 import * as auth from '../utils/auth';
 
 
 function Register({ handleRegister, handleInfoTooltipOpen }) {
-  const [registerData, setRegisterData] = useState({
-    password: 'wwbbb@email.ru',
-    email: 'dsfsdfsdfsdf',
-  });
+  // const [registerData, setRegisterData] = useState({ password: 'wwbbb1@email.ru',email: 'dsfsdfsdfsdf'});
+  const [registerData, setRegisterData] = useState({ password: '',email: ''});
+
   const [message, setMessage] = useState('');
   const { email, password } = registerData;
+
   function handleChange(e) {
+
+console.log('handleChange: e.target = ',e.target);
+
     const { email, value } = e.target;
     setRegisterData({
-      ...registerData,
-      [email]: value
+      ...registerData, 
+      [email]: value 
     });
   }
   function handleSubmit(e) {
     // console.log('Register: handleSubmit ');
     e.preventDefault();
-    if (password) {
-      handleRegister(password, email)
+    if (registerData.password) {
+      handleRegister(registerData.password, registerData.email)
         .catch((e) => setMessage(e.message))
     }
   }
@@ -50,7 +52,7 @@ function Register({ handleRegister, handleInfoTooltipOpen }) {
               required
               minLength="2"
               maxLength="30"
-              value={email}
+              value={email || ""}
               onChange={handleChange}
             />
             <span className="popup__input-error place-title-input-error"></span>
@@ -64,7 +66,7 @@ function Register({ handleRegister, handleInfoTooltipOpen }) {
               name="pass"
               required
               type="pass"
-              value={password}
+              value={password || ""}
               onChange={handleChange}
             />
             <span className="popup__input-error place-title-input-error"></span>

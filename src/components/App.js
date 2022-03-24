@@ -90,7 +90,6 @@ function App() {
       .catch((err) => console.log(err));
   }, []);
 
-
   // открытие всплывающих попапов
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
@@ -129,7 +128,6 @@ function App() {
 
   //закрываем все попапы
   const closeAllPopups = () => {
-    // console.log('closeAllPopups');
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
@@ -203,35 +201,20 @@ function App() {
     }
   }, [loggedIn])
 
-
   function handleLogin(username, password){ 
-    
-    console.log('username = ',username);
-    console.log('password = ',password);
-
     return auth.authorize(username, password)
         .then((data) => {
-
           if (!data){
             throw new Error('Что-то пошло не так!');
           }
           if (data.token){
-// debugger
-            // localStorage.setItem('token', data.token);
-            // localStorage.setItem('email', username);
-
-            // const { user: { username, password } } = data;
             const userData = { username, password }
-            
-            console.log('handleLogin: userData = ',userData);
-
             localStorage.setItem('token', data.token);
             setUserData(userData)  
             setLoggedIn(true)
           }
         })
   }
-
 
   function handleRegister( email, password ) {
     console.log('App:  handleRegister');
@@ -253,25 +236,13 @@ function App() {
   const tokenCheck = () => {
     //Получаем токен из локального хранилища
     const token = localStorage.getItem('token');
-    // console.log('tokenCheck;  token = ',token);
 
     if (localStorage.getItem('token')){
-
       auth.getContent(token).then((res) => {
-
-// console.log('tokenCheck; res = ',res)
-// console.log('tokenCheck; res.data = ',res.data)
-
         if (res){
-          // localStorage.setItem('token', res.token);
-          // localStorage.setItem('email', res.data.email);
-
           const { _id, email } = res.data;
           const userData = { _id, email }
           setUserData(userData)
-
-          console.log('tokenCheck; userData = ', userData)          
-
           setLoggedIn(true)
           history.push('/');
         }
@@ -281,7 +252,6 @@ function App() {
 
   //разлогинивание
   function signOut(){
-    console.log('signOut');
     localStorage.removeItem('token');
     setLoggedIn(false);
     history.push('/sign-in');
@@ -322,7 +292,6 @@ function App() {
           cards={cards}
           handleCardLike={handleCardLike}
           handleCardDelete={handleCardDelete}
-
           >
 
           <Footer />

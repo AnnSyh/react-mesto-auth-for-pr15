@@ -3,14 +3,9 @@ import headerLogo from '../images/header-logo.svg';
 import Navbar from '../components/NavBar';
 import { Link } from 'react-router-dom';
 
-
 function Header(props) {
 
-  console.log('Header: props = ',props);
-  console.log('Header: props.userData = ',props.userData);
-
   return (
-
     <header className="header section page__header">
       <Link to="/" className="">
         <img  className="logo"
@@ -24,7 +19,6 @@ function Header(props) {
         userData={props.userData}
       />
     </header>
-
   );
 }
 

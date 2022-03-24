@@ -1,14 +1,7 @@
 import React from 'react';
-import {  Route, NavLink, useHistory } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import {  Route, NavLink } from 'react-router-dom';
 
 function NavBar(props) {
-  const history = useHistory();
-
-console.log('NavBar: props = ', props);
-console.log('NavBar: props.loggedIn = ', props.loggedIn);
-// console.log('NavBar: props.userData = ', props.userData);
-// console.log('NavBar: localStorage = ',localStorage);
 
   return (
     <nav className="menu">

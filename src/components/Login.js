@@ -30,11 +30,6 @@ import * as auth from '../utils/auth';
         return;
       }
 
-// debugger 
-
-console.log('message = ',message)
-console.log('e.message = ',e.message)
-
       handleLogin(mail, password)
           // .catch((e) => this.setState({ message: e.message }))
     }

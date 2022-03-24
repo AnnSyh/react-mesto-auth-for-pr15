@@ -253,22 +253,24 @@ function App() {
   const tokenCheck = () => {
     //Получаем токен из локального хранилища
     const token = localStorage.getItem('token');
-    console.log('tokenCheck;  token = ',token);
-    // debugger
+    // console.log('tokenCheck;  token = ',token);
 
     if (localStorage.getItem('token')){
 
       auth.getContent(token).then((res) => {
 
-console.log('tokenCheck; res = ',res)
+// console.log('tokenCheck; res = ',res)
+// console.log('tokenCheck; res.data = ',res.data)
 
         if (res){
           // localStorage.setItem('token', res.token);
           // localStorage.setItem('email', res.data.email);
 
-          const { username, email } = res;
-          const userData = { username, email }
+          const { _id, email } = res.data;
+          const userData = { _id, email }
           setUserData(userData)
+
+          console.log('tokenCheck; userData = ', userData)          
 
           setLoggedIn(true)
           history.push('/');
@@ -277,20 +279,29 @@ console.log('tokenCheck; res = ',res)
     }
   }
 
+  //разлогинивание
+  function signOut(){
+    console.log('signOut');
+    localStorage.removeItem('token');
+    setLoggedIn(false);
+    history.push('/sign-in');
+  }
+
   const [isSuccessRegister, setIsSuccessRegister] = React.useState(false);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <Header loggedIn={loggedIn} />
+      <Header 
+        loggedIn={loggedIn} 
+        signOut={signOut}
+        userData={userData} 
+      />
       <Switch>
-      <Route exact path="/sign-up">
+        <Route exact path="/sign-up">
           <Register  
             handleRegister={handleRegister} 
             handleInfoTooltipOpen={handleInfoTooltipOpen}
           />
-          {/* <Register  
-            handleRegister={handleRegister} 
-          /> */}
         </Route>
         <Route exact path="/sign-in">
           <Login handleLogin={handleLogin}  />

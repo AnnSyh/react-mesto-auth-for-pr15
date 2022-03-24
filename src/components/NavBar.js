@@ -4,14 +4,11 @@ import { Link } from 'react-router-dom';
 
 function NavBar(props) {
   const history = useHistory();
-  function signOut(){
 
-    debugger
-    localStorage.removeItem('token');
-    // localStorage.clear();
-    debugger
-    history.push('/sign-in');
-  }
+console.log('NavBar: props = ', props);
+console.log('NavBar: props.loggedIn = ', props.loggedIn);
+// console.log('NavBar: props.userData = ', props.userData);
+// console.log('NavBar: localStorage = ',localStorage);
 
   return (
     <nav className="menu">
@@ -19,8 +16,9 @@ function NavBar(props) {
 
       {props.loggedIn ? (
         <>
-          <span>{localStorage.email}</span>
-          <button onClick={signOut} className="menu__item menu__button">Выйти</button>
+          <span>{props.userData.email}</span>
+          <span>{props.userData.username}</span>
+          <button onClick={props.signOut} className="menu__item menu__button">Выйти</button>
         </>
       ) : ( 
         <>

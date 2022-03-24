@@ -6,6 +6,9 @@ import { Link } from 'react-router-dom';
 
 function Header(props) {
 
+  console.log('Header: props = ',props);
+  console.log('Header: props.userData = ',props.userData);
+
   return (
 
     <header className="header section page__header">
@@ -15,7 +18,11 @@ function Header(props) {
               alt="логотип Mesto" />
       </Link>
 
-      <Navbar loggedIn={props.loggedIn} />
+      <Navbar 
+        loggedIn={props.loggedIn}
+        signOut={props.signOut} 
+        userData={props.userData}
+      />
     </header>
 
   );

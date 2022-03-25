@@ -11,11 +11,11 @@ function InfoTooltip(props) {
             isOpen={props.isOpen}
             onClose={props.onClose}
         >
-          <div className="form__field">
+          <div className="form__field form__field-center">
             <img className="popup__img popup__img_icon"
                     src={checkedIcon}
                     alt='checked' />
-            <h2 className="page-title popup__page-title  text-overflow">
+            <h2 className="page-title popup__page-title text-center">
               {props.message}
               </h2>
           </div>

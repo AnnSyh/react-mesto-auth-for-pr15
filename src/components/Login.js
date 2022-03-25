@@ -16,8 +16,10 @@ import * as auth from '../utils/auth';
       password: 'dsfsdfsdfsdf',
       email: 'bbb@email.ru',
     });
-    const { email, password } = userData
+    
     const [message, setMessage ] = useState('')
+    const { email, password } = userData
+
     function handleChange(e) {
       const {name, value} = e.target;
       setUserState({
@@ -26,14 +28,12 @@ import * as auth from '../utils/auth';
       });
     }
     function handleSubmit(e){
-
       e.preventDefault();
       if (!email || !password){
         return;
       }
-
       handleLogin(email, password)
-          // .catch((e) => this.setState({ message: e.message }))
+      .catch((e) => setMessage(e.message))
     }
 
 

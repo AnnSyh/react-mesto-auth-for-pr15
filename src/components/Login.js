@@ -11,10 +11,12 @@ import * as auth from '../utils/auth';
 
   const Login = ({ handleLogin }) => {
     const [userData, setUserState] = useState({
+      // password: '',
+      // email: '',
       password: 'dsfsdfsdfsdf',
-      mail: 'bbb@email.ru',
+      email: 'bbb@email.ru',
     });
-    const { mail, password } = userData
+    const { email, password } = userData
     const [message, setMessage ] = useState('')
     function handleChange(e) {
       const {name, value} = e.target;
@@ -26,11 +28,11 @@ import * as auth from '../utils/auth';
     function handleSubmit(e){
 
       e.preventDefault();
-      if (!mail || !password){
+      if (!email || !password){
         return;
       }
 
-      handleLogin(mail, password)
+      handleLogin(email, password)
           // .catch((e) => this.setState({ message: e.message }))
     }
 
@@ -60,7 +62,7 @@ import * as auth from '../utils/auth';
               className="popup__input popup__input_mail" 
               minLength="2" 
               maxLength="30" 
-              value={mail} 
+              value={email} 
               onChange={handleChange} 
           />
           <span className="popup__input-error place-title-input-error"></span>
@@ -70,8 +72,8 @@ import * as auth from '../utils/auth';
           <input 
             id="pass-input" 
             required 
-            name="pass" 
-            type="pass" 
+            name="password" 
+            type="password" 
             placeholder="Пароль" 
             className="popup__input popup__input_pass" 
             value={password} 

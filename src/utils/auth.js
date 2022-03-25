@@ -1,12 +1,9 @@
 export const BASE_URL = 'https://auth.nomoreparties.co';
 
-//Функция обработки ответа от сервера
 const handleResponse = response => response.ok ? response.json() : Promise.reject(`Ошибка ${response.status}`);
 
 //Функция регистрация пользователя
 export const register = (email, password) => {
-
-  debugger
 
   return fetch(`${BASE_URL}/signup`, {
     method: 'POST',
@@ -17,7 +14,6 @@ export const register = (email, password) => {
     body: JSON.stringify({email, password})
   })
   .then((response) => response.json())
-  // .then(handleResponse)
 };
 
 //Функция авторизация пользователя
@@ -31,7 +27,7 @@ export const authorize = (email, password) => {
     },
     body: JSON.stringify({email, password})
   })
-    .then(handleResponse)
+  .then((response) => response.json())
 };
 
 export const checkToken = (token) => {

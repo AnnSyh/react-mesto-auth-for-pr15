@@ -96,7 +96,8 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
   const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false)
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false)
-  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false)
+  const [isFailInfoTooltipOpen, setisFailInfoTooltipOpen] = useState(false)
+  const [isSuccessInfoTooltipOpen, setisSuccessInfoTooltipOpen] = useState(false)
   // ...(на submit)
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -115,8 +116,11 @@ function App() {
   const handleImagePopupOpen = () => {
     setIsImagePopupOpen(true)
   }
-  const handleInfoTooltipOpen = () => {
-    setIsInfoTooltipOpen(true)
+  const handleFailInfoTooltipOpen = () => {
+    setisFailInfoTooltipOpen(true)
+  }
+  const handleSuccessInfoTooltipOpen = () => {
+    setisSuccessInfoTooltipOpen(true)
   }
 
   //открываем попап с картинкой
@@ -133,7 +137,8 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsConfirmPopupOpen(false);
     setIsImagePopupOpen(false);
-    setIsInfoTooltipOpen(false);
+    setisFailInfoTooltipOpen(false);
+    setisSuccessInfoTooltipOpen(false);
   };
 
   // кнопка Escape
@@ -201,33 +206,28 @@ function App() {
     }
   }, [loggedIn])
 
-  function handleLogin(username, password){ 
+  function handleLogin(username, password){
     return auth.authorize(username, password)
-        .then((data) => {
-          if (!data){
-            throw new Error('Что-то пошло не так!');
+    .then((data) => {
+          if (data.message){
+            setisFailInfoTooltipOpen(true);
           }
           if (data.token){
             const userData = { username, password }
             localStorage.setItem('token', data.token);
             setUserData(userData)  
             setLoggedIn(true)
-          }
+          } 
         })
   }
 
   function handleRegister( email, password ) {
-    console.log('App:  handleRegister');
-
     return auth.register(email, password).then((res) => {
-      const { statusCode, token } = res;
-      if (token) {
-        history.push('/sign-in');
-      } else if (statusCode === 400) {
-        let { message } = res.message[0].messages[0]
-        throw new Error(message)
+      if (res.error) {
+        setisFailInfoTooltipOpen(true);
       } else {
-        throw new Error(res.error)
+        setisSuccessInfoTooltipOpen(true);
+        history.push('/sign-in')
       }
     });
   }
@@ -257,8 +257,6 @@ function App() {
     history.push('/sign-in');
   }
 
-  const [isSuccessRegister, setIsSuccessRegister] = React.useState(false);
-
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <Header 
@@ -270,7 +268,8 @@ function App() {
         <Route exact path="/sign-up">
           <Register  
             handleRegister={handleRegister} 
-            handleInfoTooltipOpen={handleInfoTooltipOpen}
+            handleFailInfoTooltipOpen={handleFailInfoTooltipOpen}
+            handleSuccessInfoTooltipOpen={handleSuccessInfoTooltipOpen}
           />
         </Route>
         <Route exact path="/sign-in">
@@ -303,11 +302,17 @@ function App() {
             </Route>
       </Switch>
 
-      {/* /попап для успешной/не успешной регистрации */}
+      {/* /попап для не успешной регистрации */}
       <InfoTooltip
         onClose={closeAllPopups}
-        isOpen={isInfoTooltipOpen}
-        isSucces={isSuccessRegister}
+        isOpen={isFailInfoTooltipOpen}
+        message={'Что-то пошло не так! Попробуйте ещё раз.'}
+      />
+       {/* /попап для успешной регистрации */}
+      <InfoTooltip
+        onClose={closeAllPopups}
+        isOpen={isSuccessInfoTooltipOpen}
+        message={'Поздравляю! Вы зарегистрировались'}
       />
 
       {/* /попап для картинки карточки */}

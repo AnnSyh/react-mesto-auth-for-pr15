@@ -1,33 +1,29 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
-import { Link, withRouter, useHistory } from "react-router-dom";
-import * as auth from '../utils/auth';
+import { useState } from 'react';
+import { Link } from "react-router-dom";
 
 
-function Register({ handleRegister, handleInfoTooltipOpen }) {
-  // const [registerData, setRegisterData] = useState({ password: 'wwbbb1@email.ru',email: 'dsfsdfsdfsdf'});
-  const [registerData, setRegisterData] = useState({ password: '',email: ''});
+function Register({ handleRegister}) {
+
+  const [registerData, setRegisterData] = useState({ 
+    password: '',
+    email: '',
+  });
 
   const [message, setMessage] = useState('');
   const { email, password } = registerData;
 
   function handleChange(e) {
-
-console.log('handleChange: e.target = ',e.target);
-
-    const { email, value } = e.target;
+    const { name, value } = e.target;
     setRegisterData({
       ...registerData, 
-      [email]: value 
+      [name]: value 
     });
   }
   function handleSubmit(e) {
-    // console.log('Register: handleSubmit ');
     e.preventDefault();
-    if (registerData.password) {
-      handleRegister(registerData.password, registerData.email)
-        .catch((e) => setMessage(e.message))
-    }
+    handleRegister(email,password)
+      .catch((e) => setMessage(e.message))
   }
 
   return (
@@ -40,7 +36,9 @@ console.log('handleChange: e.target = ',e.target);
       >
         <div>
           <div className="form__field">
-            <span className="popup__input-error place-title-input-error">{message}</span>
+            <span className="popup__input-error place-title-input-error">
+              {message}
+            </span>
           </div>
           <h2 className="page-title popup__page-title  text-overflow text-center">Регистрация</h2>
           <div className="form__field">
@@ -48,7 +46,7 @@ console.log('handleChange: e.target = ',e.target);
               placeholder="E-mail"
               id="mail-input"
               className="popup__input popup__input_mail"
-              name="mail"
+              name="email"
               required
               minLength="2"
               maxLength="30"
@@ -63,7 +61,7 @@ console.log('handleChange: e.target = ',e.target);
               placeholder="Пароль"
               id="pass-input"
               className="popup__input popup__input_pass"
-              name="pass"
+              name="password"
               required
               type="pass"
               value={password || ""}
@@ -78,8 +76,6 @@ console.log('handleChange: e.target = ',e.target);
             name="btn"
             type="submit"
           >Зарегистрироваться</button>
-
-          <button onClick={handleInfoTooltipOpen}>окошко успешной/не успешной регистрации</button>
 
           <div className="link text-center">
             Уже зарегистрированы? <Link to="/sign-in" className="link"> Войти</Link>

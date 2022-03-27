@@ -33,7 +33,6 @@ import * as auth from '../utils/auth';
         return;
       }
       handleLogin(email, password)
-      .catch((e) => setMessage(e.message))
     }
 
 

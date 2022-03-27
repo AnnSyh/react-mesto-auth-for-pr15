@@ -206,41 +206,46 @@ function App() {
     }
   }, [loggedIn])
 
-  function handleLogin(username, password){
-    return auth.authorize(username, password)
-    .then((data) => {
-          if (data.message){
-            setisFailInfoTooltipOpen(true);
-          }
-          if (data.token){
-            const userData = { username, password }
-            localStorage.setItem('token', data.token);
-            setUserData(userData)  
-            setLoggedIn(true)
-          } 
-        })
+  function handleLogin(username, password) {
+    auth
+      .authorize(username, password)
+      .then((data) => {
+          const userData = { username, password }
+          localStorage.setItem('token', data.token);  // в localStorage записываем текущий token
+          setUserData(userData)                       // устанавливаем данные юзера
+          setLoggedIn(true)                           // меняем состояние на залогинен
+      })
+      .catch((err) => {
+        setisFailInfoTooltipOpen(true);
+        console.log(err);
+      })
   }
 
-  function handleRegister( email, password ) {
-    return auth.register(email, password).then((res) => {
-      if (res.error) {
-        setisFailInfoTooltipOpen(true);
-      } else {
+  function handleRegister(email, password) {
+    auth
+      .register(email, password)
+      .then((res) => {
         setisSuccessInfoTooltipOpen(true);
         history.push('/sign-in')
-      }
-    });
+      })
+      .catch((err) => {
+        setisFailInfoTooltipOpen(true);
+        console.log(err);
+      })
   }
 
-   //Функция проверки токена в локальном хранилище
+  //Функция проверки токена в локальном хранилище
   const tokenCheck = () => {
     //Получаем токен из локального хранилища
     const token = localStorage.getItem('token');
 
-    if (localStorage.getItem('token')){
+    if (localStorage.getItem('token')) {
       auth.getContent(token).then((res) => {
-        if (res){
-          const { _id, email } = res.data;
+        if (res) {
+
+console.log('res = ',res);
+
+          const { _id, email, message } = res.data;
           const userData = { _id, email }
           setUserData(userData)
           setLoggedIn(true)
@@ -251,7 +256,7 @@ function App() {
   }
 
   //разлогинивание
-  function signOut(){
+  function signOut() {
     localStorage.removeItem('token');
     setLoggedIn(false);
     history.push('/sign-in');
@@ -259,26 +264,26 @@ function App() {
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <Header 
-        loggedIn={loggedIn} 
+      <Header
+        loggedIn={loggedIn}
         signOut={signOut}
-        userData={userData} 
+        userData={userData}
       />
       <Switch>
         <Route exact path="/sign-up">
-          <Register  
-            handleRegister={handleRegister} 
+          <Register
+            handleRegister={handleRegister}
             handleFailInfoTooltipOpen={handleFailInfoTooltipOpen}
             handleSuccessInfoTooltipOpen={handleSuccessInfoTooltipOpen}
           />
         </Route>
         <Route exact path="/sign-in">
-          <Login handleLogin={handleLogin}  />
+          <Login handleLogin={handleLogin} />
         </Route>
 
-        <ProtectedRoute 
-          exact path="/" 
-          loggedIn={loggedIn} 
+        <ProtectedRoute
+          exact path="/"
+          loggedIn={loggedIn}
           component={Main}
 
           handleEditAvatarClick={handleEditAvatarClick}
@@ -291,15 +296,15 @@ function App() {
           cards={cards}
           handleCardLike={handleCardLike}
           handleCardDelete={handleCardDelete}
-          >
+        >
 
           <Footer />
         </ProtectedRoute>
 
         {/* стр не найдена */}
         <Route path='*'>
-              <PageNotFound />
-            </Route>
+          <PageNotFound />
+        </Route>
       </Switch>
 
       {/* /попап для не успешной регистрации */}
@@ -308,7 +313,7 @@ function App() {
         isOpen={isFailInfoTooltipOpen}
         message={'Что-то пошло не так! Попробуйте ещё раз.'}
       />
-       {/* /попап для успешной регистрации */}
+      {/* /попап для успешной регистрации */}
       <InfoTooltip
         onClose={closeAllPopups}
         isOpen={isSuccessInfoTooltipOpen}

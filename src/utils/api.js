@@ -4,7 +4,7 @@ const handleError = res => {
     return res.json();
   }
 
-  return Promise.reject('Something went wrong!');
+  return Promise.reject(`Ошибка ${res.status}`);
 };
 
 

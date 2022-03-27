@@ -23,7 +23,7 @@ function Register({ handleRegister}) {
   function handleSubmit(e) {
     e.preventDefault();
     handleRegister(email,password)
-      .catch((e) => setMessage(e.message))
+      // .catch((e) => setMessage(e.message))
   }
 
   return (

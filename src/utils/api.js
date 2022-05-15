@@ -117,7 +117,7 @@ class Api {
 }
 
 const api = new Api({
-  url: "http://mesto.frontend.annsyh.nomoredomains.work",
+  url: "http://mesto.backend.annsyh.nomoredomains.work",
   headers: {
     "Authorization" : `Bearer ${localStorage.getItem('token')}`,
     "Content-Type": "application/json",

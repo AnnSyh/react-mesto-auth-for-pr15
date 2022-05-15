@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://mesto.frontend.annsyh.nomoredomains.work';
+export const BASE_URL = 'https://mesto.backend.annsyh.nomoredomains.work';
 
 const handleResponse = response => {
 if (response.ok) { 

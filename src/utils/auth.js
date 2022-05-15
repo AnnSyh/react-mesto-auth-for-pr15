@@ -11,7 +11,7 @@ return Promise.reject(`Ошибка ${response.status}`);
 //Функция регистрация пользователя
 export const register = (email, password) => {
 
-  return fetch(`${BASE_URL}/signup`, {
+  return fetch(`${BASE_URL}/sign-up`, {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
@@ -25,7 +25,7 @@ export const register = (email, password) => {
 //Функция авторизация пользователя
 export const authorize = (email, password) => {
 
-  return fetch(`${BASE_URL}/signin`, {
+  return fetch(`${BASE_URL}/sign-in`, {
     method: 'POST',
     headers: {
       'Accept': 'application/json',

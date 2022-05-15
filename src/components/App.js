@@ -224,7 +224,7 @@ console.log('userData = ', userData);
           setUserData(userData)                       // устанавливаем данные юзера
 
           console.log('userData= ', userData);
-          
+
           setLoggedIn(true)                           // меняем состояние на залогинен
       })
       .catch((err) => {
@@ -250,6 +250,7 @@ console.log('userData = ', userData);
   const tokenCheck = () => {
     //Получаем токен из локального хранилища
     const token = localStorage.getItem('token');
+    console.log('localStorage.getItem(token) = ', localStorage.getItem('token'));
 
     if (localStorage.getItem('token')) {
       auth.getContent(token).then((res) => {

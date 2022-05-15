@@ -182,6 +182,7 @@ console.log('userData = ', userData);
     api
       .postAvatar(avatar)
       .then((data) => {
+        console.log('avatar src = ', data.avatar);
         setCurrentUser(data);
         closeAllPopups();
       })
@@ -238,7 +239,7 @@ console.log('userData = ', userData);
       .register(email, password)
       .then((res) => {
         setisSuccessInfoTooltipOpen(true);
-        history.push('/sign-in')
+        history.push('/signin')
       })
       .catch((err) => {
         setisFailInfoTooltipOpen(true);
@@ -279,7 +280,7 @@ console.log('userData = ', userData);
   function signOut() {
     localStorage.removeItem('token');
     setLoggedIn(false);
-    history.push('/sign-in');
+    history.push('/signin');
   }
 
   return (
@@ -290,14 +291,14 @@ console.log('userData = ', userData);
         userData={userData}
       />
       <Switch>
-        <Route exact path="/sign-up">
+        <Route exact path="/signup">
           <Register
             handleRegister={handleRegister}
             handleFailInfoTooltipOpen={handleFailInfoTooltipOpen}
             handleSuccessInfoTooltipOpen={handleSuccessInfoTooltipOpen}
           />
         </Route>
-        <Route exact path="/sign-in">
+        <Route exact path="/signin">
           <Login handleLogin={handleLogin} />
         </Route>
 

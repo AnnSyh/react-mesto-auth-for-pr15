@@ -29,6 +29,7 @@ function App() {
     api
       .getInitialCards()
       .then((cards) => {
+        console.log('cards= ',cards);
         setCards(cards);
       })
       .catch((err) => console.log(err));
@@ -85,6 +86,9 @@ function App() {
     api
       .getUser()
       .then((userData) => {
+
+console.log('userData = ', userData);
+
         setCurrentUser(userData);
       })
       .catch((err) => console.log(err));
@@ -210,9 +214,17 @@ function App() {
     auth
       .authorize(username, password)
       .then((data) => {
+
+        console.log('data= ', data);
+        console.log('data.token= ', data.token);
+       
+
           const userData = { username, password }
           localStorage.setItem('token', data.token);  // в localStorage записываем текущий token
           setUserData(userData)                       // устанавливаем данные юзера
+
+          console.log('userData= ', userData);
+          
           setLoggedIn(true)                           // меняем состояние на залогинен
       })
       .catch((err) => {
@@ -243,11 +255,18 @@ function App() {
       auth.getContent(token).then((res) => {
         if (res) {
 
-console.log('res = ',res);
+console.log('token = ', token);
+console.log('token = ', localStorage.getItem('token'));
+console.log('res = ', res);
 
-          const { _id, email, message } = res.data;
+
+          const { _id, email } = res.data;
           const userData = { _id, email }
-          setUserData(userData)
+          setUserData(userData);
+
+console.log('_id = ', _id);
+console.log('email = ', email);
+console.log('userData = ', userData);
           setLoggedIn(true)
           history.push('/');
         }

@@ -18,7 +18,6 @@ class Api {
   getUser() {
     return fetch(`${this._url}/users/me`, {
       headers: this._headers,
-      // body: JSON.stringify()
     })
       .then(handleError);
   }
@@ -26,7 +25,6 @@ class Api {
   getUserInfo() {
     return fetch(`${this._url}/users/me`, {
       headers: this._headers,
-      // body: JSON.stringify()
     })
       .then(handleError);
   }
@@ -111,10 +109,10 @@ class Api {
 }
 
 const api = new Api({
-  url: "https://mesto.nomoreparties.co/v1/cohort-34",
+  url: "http://mesto.frontend.annsyh.nomoredomains.work",
   headers: {
-  authorization: "1690dfea-cbda-42f6-a87e-a16c1f76892e",
-  "Content-Type": "application/json",
+    "Authorization" : `Bearer ${localStorage.getItem('token')}`,
+    "Content-Type": "application/json",
   },
 });
 

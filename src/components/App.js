@@ -30,7 +30,9 @@ function App() {
       .getInitialCards()
       .then((cards) => {
         console.log('cards= ',cards);
-        setCards(cards);
+        console.log('cards= ',cards.cards);
+        // setCards(cards);
+        setCards(cards.cards);
       })
       .catch((err) => console.log(err));
 
@@ -260,9 +262,11 @@ console.log('userData = ', userData);
 console.log('token = ', token);
 console.log('token = ', localStorage.getItem('token'));
 console.log('res = ', res);
+console.log('res._id = ', res._id);
+console.log('res.email = ', res.email);
 
 
-          const { _id, email } = res.data;
+          const { _id, email } = res;
           const userData = { _id, email }
           setUserData(userData);
 

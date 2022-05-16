@@ -4,7 +4,6 @@ import Card from './Card';
 import CurrentUserContext from '../contexts/CurrentUserContext';
 
 function Main(props) {
-// console.log('Main props= ',props);
     // Подписываемся на контекст CurrentUserContext
     const currentUser = React.useContext(CurrentUserContext);
 
@@ -52,6 +51,7 @@ function Main(props) {
                                 />
                             );
                         })}
+
                     </ul>
                 </div>
             </section>

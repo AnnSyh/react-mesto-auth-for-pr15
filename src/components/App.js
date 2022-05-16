@@ -87,13 +87,12 @@ function App() {
     api
       .getUser()
       .then((userData) => {
-
-console.log('userData = ', userData);
-
+console.log('useEffect: userData = ', userData);
         setCurrentUser(userData);
       })
       .catch((err) => console.log(err));
   }, []);
+
 
   // открытие всплывающих попапов
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
@@ -240,7 +239,7 @@ console.log('userData = ', userData);
       .register(email, password)
       .then((res) => {
         setisSuccessInfoTooltipOpen(true);
-        history.push('/signin')
+        history.push('/sign-in')
       })
       .catch((err) => {
         setisFailInfoTooltipOpen(true);
@@ -271,7 +270,7 @@ console.log('userData = ', userData);
   function signOut() {
     localStorage.removeItem('token');
     setLoggedIn(false);
-    history.push('/signin');
+    history.push('/sign-in');
   }
 
   return (
@@ -282,14 +281,14 @@ console.log('userData = ', userData);
         userData={userData}
       />
       <Switch>
-        <Route exact path="/signup">
+        <Route exact path="/sign-up">
           <Register
             handleRegister={handleRegister}
             handleFailInfoTooltipOpen={handleFailInfoTooltipOpen}
             handleSuccessInfoTooltipOpen={handleSuccessInfoTooltipOpen}
           />
         </Route>
-        <Route exact path="/signin">
+        <Route exact path="/sign-in">
           <Login handleLogin={handleLogin} />
         </Route>
 

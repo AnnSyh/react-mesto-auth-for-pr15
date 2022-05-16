@@ -25,7 +25,7 @@ class Api {
 
   getUser() {
     return fetch(`${this._url}/users/me`, {
-      headers: this._getHeaders(),
+      headers: this._getHeaders(),   
     })
       .then(handleError);
   }
@@ -56,6 +56,7 @@ class Api {
   postAvatar(avatar){
     return fetch(`${this._url}/users/me/avatar`, {
       method: 'PATCH',
+      // headers: this._getHeaders(),
       headers: this._getHeaders(),
       body: JSON.stringify({
         avatar: avatar

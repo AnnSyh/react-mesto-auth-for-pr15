@@ -11,6 +11,6 @@ const currentUser = {
 }; 
 
 // console.log('Provider value = ',CurrentUserContext.value)
-// console.log('currentUser = ',currentUser)
+console.log('CurrentUserContext.js: currentUser = ',currentUser)
 
 export default CurrentUserContext;

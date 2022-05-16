@@ -7,14 +7,14 @@ import * as auth from '../utils/auth';
 
 
   // Подписываемся на контекст CurrentUserContext
-  // const currentUser = React.useContext(CurrentUserContext);
+  const currentUser = React.useContext(CurrentUserContext);
 
   const Login = ({ handleLogin }) => {
     const [userData, setUserState] = useState({
       // password: '',
       // email: '',
-      password: 'dsfsdfsdfsdf',
-      email: 'bbb@email.ru',
+      password: '11111111111',
+      email: 'test1@errrr.yy',
     });
     
     const [message, setMessage ] = useState('')

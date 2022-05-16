@@ -17,6 +17,8 @@ function Card(props) {
     const currentUser = React.useContext(CurrentUserContext);
 
     // Определяем, являемся ли мы владельцем текущей карточки
+    // console.log('props = ', props);
+    // console.log('props.card = ', props.card);
     // console.log('props.owner._id = ', props.owner._id);
     // console.log('currentUser._id = ', currentUser._id);
 

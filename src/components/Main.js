@@ -7,6 +7,11 @@ function Main(props) {
     // Подписываемся на контекст CurrentUserContext
     const currentUser = React.useContext(CurrentUserContext);
 
+    console.log('currentUser = ',currentUser);
+    console.log('currentUser.name = ',currentUser.name);
+    console.log('currentUser.about = ',currentUser.about);
+    console.log('currentUser.avatar = ',currentUser.avatar);
+
     return (
         <>
             <section className="profile section content__section">

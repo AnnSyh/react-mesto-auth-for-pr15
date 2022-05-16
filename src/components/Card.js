@@ -17,18 +17,17 @@ function Card(props) {
     const currentUser = React.useContext(CurrentUserContext);
 
     // Определяем, являемся ли мы владельцем текущей карточки
-    console.log('111 props = ', props);
-    // console.log('111 props.owner._id = ', props.owner._id);
-    // console.log('111 currentUser._id = ', currentUser._id);
+    // console.log('props.owner._id = ', props.owner._id);
+    // console.log('currentUser._id = ', currentUser._id);
 
-    const isOwn = props.owner._id === currentUser._id;
+    const isOwn = props.owner === currentUser._id;
     // Создаём переменную, которую после зададим в `className` для кнопки удаления
     const cardDeleteButtonClassName = (
         `cards__trash ${isOwn ? '' : 'hidden'}`
     );
 
     // Определяем, есть ли у карточки лайк, поставленный текущим пользователем
-    const isLiked = props.likes.some(i => i._id === currentUser._id);
+    const isLiked = props.likes.some(i => i === currentUser._id);
     // Создаём переменную, которую после зададим в `className` для кнопки лайка
     const cardLikeButtonClassName = `cards__heart ${isLiked ? 'cards__heart_active' : ''}`;
 

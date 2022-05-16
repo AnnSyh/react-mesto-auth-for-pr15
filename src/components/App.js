@@ -29,9 +29,8 @@ function App() {
     api
       .getInitialCards()
       .then((cards) => {
-        console.log('cards= ',cards);
-        console.log('cards= ',cards.cards);
-        // setCards(cards);
+        // console.log('cards= ',cards);
+        // console.log('cards= ',cards.cards);
         setCards(cards.cards);
       })
       .catch((err) => console.log(err));
@@ -253,26 +252,14 @@ console.log('userData = ', userData);
   const tokenCheck = () => {
     //Получаем токен из локального хранилища
     const token = localStorage.getItem('token');
-    console.log('localStorage.getItem(token) = ', localStorage.getItem('token'));
 
     if (localStorage.getItem('token')) {
       auth.getContent(token).then((res) => {
         if (res) {
-
-console.log('token = ', token);
-console.log('token = ', localStorage.getItem('token'));
-console.log('res = ', res);
-console.log('res._id = ', res._id);
-console.log('res.email = ', res.email);
-
-
           const { _id, email } = res;
           const userData = { _id, email }
           setUserData(userData);
 
-console.log('_id = ', _id);
-console.log('email = ', email);
-console.log('userData = ', userData);
           setLoggedIn(true)
           history.push('/');
         }

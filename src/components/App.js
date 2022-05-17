@@ -43,13 +43,6 @@ function App() {
     api
       .changeLike(card._id, !isLiked)
       .then((newCard) => {
-
-console.log('card = ', card);
-
-console.log('handleCardLike: newCard = ', newCard);
-console.log('handleCardLike: newCard.cards = ', newCard.cards);
-console.log('handleCardLike: newCard.cards.likes = ', newCard.cards.likes);
-
         setCards((state) => state.map((c) => c._id === card._id ? newCard.cards : c));
       })
       .catch((err) => console.log(err));

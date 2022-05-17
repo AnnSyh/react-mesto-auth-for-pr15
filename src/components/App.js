@@ -162,7 +162,8 @@ function App() {
     api
       .postUser(user)
       .then((userData) => {
-        setCurrentUser(userData);
+        // console.log('userData = ', userData.data);
+        setCurrentUser(userData.data);
         closeAllPopups();
       })
       .catch((err) => console.log(err))
@@ -181,8 +182,8 @@ function App() {
     api
       .postAvatar(avatar)
       .then((data) => {
-        console.log('avatar src = ', data.avatar);
-        setCurrentUser(data);
+        // console.log('handleUpdateAvatar: data.data = ', data.data);
+        setCurrentUser(data.data);
         closeAllPopups();
       })
       .catch((err) => console.log(err))

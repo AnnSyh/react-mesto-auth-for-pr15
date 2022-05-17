@@ -8,7 +8,6 @@ function Card(props) {
     }
     function handleCardLike() {
         props.handleCardLike();
-        console.log('Card:   props.handleCardLike() = ', props.handleCardLike());
     }
     function handleCardDelete() {
         props.handleCardDelete();

@@ -6,13 +6,7 @@ import CurrentUserContext from '../contexts/CurrentUserContext';
 function Main(props) {
     // Подписываемся на контекст CurrentUserContext
     const currentUser = React.useContext(CurrentUserContext);
-
-    console.log('currentUser = ',currentUser);
-    console.log('currentUser.data = ',currentUser.data);
-    // console.log('currentUser.name = ',currentUser.data.name);
-    // console.log('currentUser.about = ',currentUser.data.about);
-    // console.log('currentUser.avatar = ',currentUser.data.avatar);
-
+    // console.log('currentUser = ',currentUser);
     return (
         <>
             <section className="profile section content__section">
@@ -49,18 +43,12 @@ function Main(props) {
                     <ul className="cards__list list-template-place">
                         {props.cards.map((card) => {
                             return (
-                                <Card 
+                                <Card key={card._id}
                                     handleCardClick={() => props.handleCardClick(card)}
                                     handleCardLike={() => props.handleCardLike(card)}
                                     handleCardDelete={() => props.handleCardDelete(card)}
                                     {...card}
                                 />
-                                // <Card key={card._id}
-                                //     handleCardClick={() => props.handleCardClick(card)}
-                                //     handleCardLike={() => props.handleCardLike(card)}
-                                //     handleCardDelete={() => props.handleCardDelete(card)}
-                                //     {...card}
-                                // />
                             );
                         })}
 

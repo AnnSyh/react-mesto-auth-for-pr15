@@ -29,8 +29,7 @@ function App() {
     api
       .getInitialCards()
       .then((cards) => {
-        // console.log('cards= ',cards);
-        // console.log('cards= ',cards.cards);
+        console.log('useEffect: cards= ',cards);
         setCards(cards.cards);
       })
       .catch((err) => console.log(err));
@@ -39,12 +38,19 @@ function App() {
 
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    const isLiked = card.likes.some(id => id === currentUser._id);
     // Отправляем запрос в API и получаем обновлённые данные карточки
     api
       .changeLike(card._id, !isLiked)
       .then((newCard) => {
-        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+
+console.log('card = ', card);
+
+console.log('handleCardLike: newCard = ', newCard);
+console.log('handleCardLike: newCard.cards = ', newCard.cards);
+console.log('handleCardLike: newCard.cards.likes = ', newCard.cards.likes);
+
+        setCards((state) => state.map((c) => c._id === card._id ? newCard.cards : c));
       })
       .catch((err) => console.log(err));
   }
@@ -87,7 +93,7 @@ function App() {
     api
       .getUser()
       .then((userData) => {
-console.log('useEffect: userData = ', userData);
+        console.log('useEffect: userData = ', userData);
         setCurrentUser(userData);
       })
       .catch((err) => console.log(err));

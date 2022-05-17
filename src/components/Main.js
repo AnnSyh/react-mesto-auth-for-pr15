@@ -8,9 +8,10 @@ function Main(props) {
     const currentUser = React.useContext(CurrentUserContext);
 
     console.log('currentUser = ',currentUser);
-    console.log('currentUser.name = ',currentUser.name);
-    console.log('currentUser.about = ',currentUser.about);
-    console.log('currentUser.avatar = ',currentUser.avatar);
+    console.log('currentUser.data = ',currentUser.data);
+    // console.log('currentUser.name = ',currentUser.data.name);
+    // console.log('currentUser.about = ',currentUser.data.about);
+    // console.log('currentUser.avatar = ',currentUser.data.avatar);
 
     return (
         <>
@@ -48,12 +49,18 @@ function Main(props) {
                     <ul className="cards__list list-template-place">
                         {props.cards.map((card) => {
                             return (
-                                <Card key={card._id}
+                                <Card 
                                     handleCardClick={() => props.handleCardClick(card)}
                                     handleCardLike={() => props.handleCardLike(card)}
                                     handleCardDelete={() => props.handleCardDelete(card)}
                                     {...card}
                                 />
+                                // <Card key={card._id}
+                                //     handleCardClick={() => props.handleCardClick(card)}
+                                //     handleCardLike={() => props.handleCardLike(card)}
+                                //     handleCardDelete={() => props.handleCardDelete(card)}
+                                //     {...card}
+                                // />
                             );
                         })}
 

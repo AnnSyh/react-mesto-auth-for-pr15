@@ -3,11 +3,14 @@ import CurrentUserContext from '../contexts/CurrentUserContext';
 
 function Card(props) {
 
+    console.log('Card:   props = ', props);
+
     function handleCardClick() {
         props.handleCardClick();
     }
     function handleCardLike() {
         props.handleCardLike();
+        console.log('Card:   props.handleCardLike() = ', props.handleCardLike());
     }
     function handleCardDelete() {
         props.handleCardDelete();
@@ -29,7 +32,17 @@ function Card(props) {
     );
 
     // Определяем, есть ли у карточки лайк, поставленный текущим пользователем
+
+console.log('props = ', props);
+console.log('props.likes = ', props.likes);
+console.log('currentUser = ', currentUser);
+console.log('currentUser._id = ', currentUser._id);
+
     const isLiked = props.likes.some(i => i === currentUser._id);
+    // const isLiked = true;
+
+    console.log('isLiked = ', isLiked);
+
     // Создаём переменную, которую после зададим в `className` для кнопки лайка
     const cardLikeButtonClassName = `cards__heart ${isLiked ? 'cards__heart_active' : ''}`;
 
@@ -57,6 +70,7 @@ function Card(props) {
                         onClick={handleCardLike}
                     ></button>
                     <div className="cards__heart-counter">{props.likes.length}</div>
+                    {/* <div className="cards__heart-counter">{props.data.likes.length}</div> */}
                 </div>
             </div>
         </li>

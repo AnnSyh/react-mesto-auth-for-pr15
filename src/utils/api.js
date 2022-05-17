@@ -25,7 +25,7 @@ class Api {
 
   getUser() {
     return fetch(`${this._url}/users/me`, {
-      headers: this._getHeaders(),   
+      headers: this._getHeaders(),       
     })
       .then(handleError);
   }
@@ -103,10 +103,10 @@ class Api {
   }
 
   changeLike(id, like){
-    if(!id) {
-      console.error("Api.changeLike не передан обязательный аргумент cardId. Такой запрос не пройдет.");
-      return;
-    }
+    // if(!id) {
+    //   console.error("Api.changeLike не передан обязательный аргумент cardId. Такой запрос не пройдет.");
+    //   return;
+    // }
     return fetch(`${this._url}/cards/${id}/likes`, {
       method: (like ? 'PUT' : 'DELETE'),
       headers: this._getHeaders()

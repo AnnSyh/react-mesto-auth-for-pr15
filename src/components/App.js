@@ -130,16 +130,16 @@ function App() {
 
   
   //получаем массив карточек
-  useEffect(() => {
-    api
-      .getInitialCards()
-      .then((cards) => {
-        console.log('useEffect: cards= ',cards);
-        setCards(cards.cards);
-      })
-      .catch((err) => console.log(err));
+  // useEffect(() => {
+  //   api
+  //     .getInitialCards()
+  //     .then((cards) => {
+  //       console.log('useEffect: cards= ',cards);
+  //       setCards(cards.cards);
+  //     })
+  //     .catch((err) => console.log(err));
 
-  }, []);
+  // }, []);
 
   // кнопка Escape
   useEffect(() => {
@@ -165,13 +165,15 @@ function App() {
 
   //Регистрация
   useEffect(() => tokenCheck(), [])
+
+  // если залогинены - получаем карточки и информацию о пользователе
   useEffect(() => {
     if (loggedIn) {
-
       api
-      .getUser()
-      .then((userData) => {
+      .renderUserAndCards()
+      .then(([userData, cards]) => {
         setCurrentUser(userData);
+        setCards(cards.cards);
       })
       .catch((err) => console.log(err));
       

@@ -31,21 +31,15 @@ class Api {
       .then(handleError);
   }
 
-  // getUserInfo() {
-  //   return fetch(`${this._url}/users/me`, {
-  //     method: 'GET',
-  //     headers: this._getHeaders(),
-  //   })
-  //     .then(handleError);
-  // }
-
 
   getInitialCards() {
     return fetch(`${this._url}/cards`, { headers: this._getHeaders() })
       .then(handleError);
   }
 
-
+  renderUserAndCards() { // если оба промиса зарезолвены - верни массив этих промисов
+    return Promise.all([this.getUser(), this.getInitialCards()]);
+  }
 
   postUser(user){
     return fetch(`${this._url}/users/me`, {

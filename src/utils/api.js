@@ -25,17 +25,19 @@ class Api {
 
   getUser() {
     return fetch(`${this._url}/users/me`, {
+      method: 'GET',
       headers: this._getHeaders(),       
     })
       .then(handleError);
   }
 
-  getUserInfo() {
-    return fetch(`${this._url}/users/me`, {
-      headers: this._getHeaders(),
-    })
-      .then(handleError);
-  }
+  // getUserInfo() {
+  //   return fetch(`${this._url}/users/me`, {
+  //     method: 'GET',
+  //     headers: this._getHeaders(),
+  //   })
+  //     .then(handleError);
+  // }
 
 
   getInitialCards() {

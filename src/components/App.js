@@ -23,18 +23,66 @@ import * as auth from '../utils/auth';
 
 
 function App() {
-  const [cards, setCards] = useState([]);
-  //получаем массив карточек
-  useEffect(() => {
-    api
-      .getInitialCards()
-      .then((cards) => {
-        console.log('useEffect: cards= ',cards);
-        setCards(cards.cards);
-      })
-      .catch((err) => console.log(err));
 
-  }, []);
+  const [cards, setCards] = useState([]);
+  const [currentUser, setCurrentUser] = useState({});
+  const [selectedCard, setSelectedCard] = useState({});
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [userData, setUserData] = useState({
+    username: '',
+    email: '',
+  })
+
+  const history = useHistory();
+  // открытие всплывающих попапов
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
+  const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false)
+  const [isImagePopupOpen, setIsImagePopupOpen] = useState(false)
+  const [isFailInfoTooltipOpen, setisFailInfoTooltipOpen] = useState(false)
+  const [isSuccessInfoTooltipOpen, setisSuccessInfoTooltipOpen] = useState(false)
+  // ...(на submit)
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleEditAvatarClick = () => {
+    setIsEditAvatarPopupOpen(true)
+  }
+  const handleAddPlaceClick = () => {
+    setIsAddPlacePopupOpen(true)
+  }
+  const handleEditProfileClick = () => {
+    setIsEditProfilePopupOpen(true)
+  }
+  const handleConfirmClick = () => {
+    setIsConfirmPopupOpen(true)
+  }
+  const handleImagePopupOpen = () => {
+    setIsImagePopupOpen(true)
+  }
+  const handleFailInfoTooltipOpen = () => {
+    setisFailInfoTooltipOpen(true)
+  }
+  const handleSuccessInfoTooltipOpen = () => {
+    setisSuccessInfoTooltipOpen(true)
+  }
+
+  //открываем попап с картинкой
+  const handleCardClick = (card) => {
+    setSelectedCard(card)       //передаем  данные карточки
+    setIsImagePopupOpen(true)   //открываем попап скартинкой
+  };
+
+  //закрываем все попапы
+  const closeAllPopups = () => {
+    setIsAddPlacePopupOpen(false);
+    setIsEditAvatarPopupOpen(false);
+    setIsEditProfilePopupOpen(false);
+    setIsConfirmPopupOpen(false);
+    setIsImagePopupOpen(false);
+    setisFailInfoTooltipOpen(false);
+    setisSuccessInfoTooltipOpen(false);
+  };
 
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
@@ -80,69 +128,18 @@ function App() {
       );
   }
 
-  //  Отправляем запрос в API и устанавливаем текущего юзера
-  const [currentUser, setCurrentUser] = useState({});
+  
+  //получаем массив карточек
   useEffect(() => {
     api
-      .getUser()
-      .then((userData) => {
-        console.log('useEffect: userData = ', userData);
-        setCurrentUser(userData);
+      .getInitialCards()
+      .then((cards) => {
+        console.log('useEffect: cards= ',cards);
+        setCards(cards.cards);
       })
       .catch((err) => console.log(err));
+
   }, []);
-
-
-  // открытие всплывающих попапов
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
-  const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false)
-  const [isImagePopupOpen, setIsImagePopupOpen] = useState(false)
-  const [isFailInfoTooltipOpen, setisFailInfoTooltipOpen] = useState(false)
-  const [isSuccessInfoTooltipOpen, setisSuccessInfoTooltipOpen] = useState(false)
-  // ...(на submit)
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleEditAvatarClick = () => {
-    setIsEditAvatarPopupOpen(true)
-  }
-  const handleAddPlaceClick = () => {
-    setIsAddPlacePopupOpen(true)
-  }
-  const handleEditProfileClick = () => {
-    setIsEditProfilePopupOpen(true)
-  }
-  const handleConfirmClick = () => {
-    setIsConfirmPopupOpen(true)
-  }
-  const handleImagePopupOpen = () => {
-    setIsImagePopupOpen(true)
-  }
-  const handleFailInfoTooltipOpen = () => {
-    setisFailInfoTooltipOpen(true)
-  }
-  const handleSuccessInfoTooltipOpen = () => {
-    setisSuccessInfoTooltipOpen(true)
-  }
-
-  //открываем попап с картинкой
-  const [selectedCard, setSelectedCard] = useState({});
-  const handleCardClick = (card) => {
-    setSelectedCard(card)       //передаем  данные карточки
-    setIsImagePopupOpen(true)   //открываем попап скартинкой
-  };
-
-  //закрываем все попапы
-  const closeAllPopups = () => {
-    setIsAddPlacePopupOpen(false);
-    setIsEditAvatarPopupOpen(false);
-    setIsEditProfilePopupOpen(false);
-    setIsConfirmPopupOpen(false);
-    setIsImagePopupOpen(false);
-    setisFailInfoTooltipOpen(false);
-    setisSuccessInfoTooltipOpen(false);
-  };
 
   // кнопка Escape
   useEffect(() => {
@@ -153,7 +150,34 @@ function App() {
     }
     document.addEventListener('keydown', closeByEscape)
     return () => document.removeEventListener('keydown', closeByEscape)
-  }, [])
+  }, []);
+
+  //  Отправляем запрос в API и устанавливаем текущего юзера
+  useEffect(() => {
+    api
+      .getUser()
+      .then((userData) => {
+        setCurrentUser(userData);
+      })
+      .catch((err) => console.log(err));
+  }, [loggedIn]);
+
+
+  //Регистрация
+  useEffect(() => tokenCheck(), [])
+  useEffect(() => {
+    if (loggedIn) {
+
+      api
+      .getUser()
+      .then((userData) => {
+        setCurrentUser(userData);
+      })
+      .catch((err) => console.log(err));
+      
+      history.push('/');
+    }
+  }, [loggedIn]);
 
   // Функция обновления пользователя 
   function handleUpdateUser(user) {
@@ -195,21 +219,7 @@ function App() {
       );
   }
 
-  //Регистрация
-  const [loggedIn, setLoggedIn] = useState(false)
 
-  const [userData, setUserData] = useState({
-    username: '',
-    email: '',
-  })
-  const history = useHistory();
-
-  useEffect(() => tokenCheck(), [])
-  useEffect(() => {
-    if (loggedIn) {
-      history.push('/');
-    }
-  }, [loggedIn])
 
   function handleLogin(username, password) {
     auth
@@ -255,8 +265,8 @@ function App() {
     if (localStorage.getItem('token')) {
       auth.getContent(token).then((res) => {
         if (res) {
-          const { _id, email } = res;
-          const userData = { _id, email }
+          const { username, email } = res;
+          const userData = { username, email }
           setUserData(userData);
 
           setLoggedIn(true)

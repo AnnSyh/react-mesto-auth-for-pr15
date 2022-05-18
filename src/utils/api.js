@@ -15,25 +15,34 @@ class Api {
     this._headers = headers;
   }
 
-  _getHeaders() {
-    const token = localStorage.getItem('token');
-    return {
-      'Authorization': `Bearer ${token}`,
-      ...this._headers,
-    };
-  }
+  // _getHeaders() {
+  //   const token = localStorage.getItem('token');
+  //   return {
+  //     'Authorization': `Bearer ${token}`,
+  //     ...this._headers,
+  //   };
+  // }
+
+  updateTokenInHeaders() {
+    this._headers = {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json'
+    }
+}
 
   getUser() {
     return fetch(`${this._url}/users/me`, {
       method: 'GET',
-      headers: this._getHeaders(),       
+      headers: this._headers,       
     })
       .then(handleError);
   }
 
 
   getInitialCards() {
-    return fetch(`${this._url}/cards`, { headers: this._getHeaders() })
+    return fetch(`${this._url}/cards`, { 
+      headers: this._headers,
+    })
       .then(handleError);
   }
 
@@ -44,7 +53,7 @@ class Api {
   postUser(user){
     return fetch(`${this._url}/users/me`, {
       method: 'PATCH',
-      headers: this._getHeaders(),
+      headers: this._headers,
       body: JSON.stringify(user)
     })
       .then(handleError);
@@ -52,8 +61,7 @@ class Api {
   postAvatar(avatar){
     return fetch(`${this._url}/users/me/avatar`, {
       method: 'PATCH',
-      // headers: this._getHeaders(),
-      headers: this._getHeaders(),
+      headers:this._headers,
       body: JSON.stringify({
         avatar: avatar
       })
@@ -65,7 +73,7 @@ class Api {
   postCreateCard(card) {
     return fetch(`${this._url}/cards`, {
       method: 'POST',
-      headers: this._getHeaders(),
+      headers: this._headers,
       body: JSON.stringify({
         name: card.name,
         link: card.link
@@ -77,7 +85,7 @@ class Api {
   deleteCard(id) {
     return fetch(`${this._url}/cards/${id}`, {
       method: 'DELETE',
-      headers: this._getHeaders()
+      headers: this._headers,
     })
       .then(handleError);
   }
@@ -85,7 +93,7 @@ class Api {
   postLike(id) {
     return fetch(`${this._url}/cards/${id}/likes`, {
       method: 'PUT',
-      headers: this._getHeaders(),
+      headers: this._headers,
     })
       .then(handleError);
   }
@@ -93,7 +101,7 @@ class Api {
   deleteLike(id) {
     return fetch(`${this._url}/cards/${id}/likes`, {
       method: 'DELETE',
-      headers: this._getHeaders(),
+      headers: this._headers,
     })
       .then(handleError);
   }
@@ -105,7 +113,7 @@ class Api {
     }
     return fetch(`${this._url}/cards/${id}/likes`, {
       method: (like ? 'PUT' : 'DELETE'),
-      headers: this._getHeaders()
+      headers: this._headers,
     })
       .then(handleError);
   }

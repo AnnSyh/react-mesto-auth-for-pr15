@@ -128,18 +128,6 @@ function App() {
       );
   }
 
-  
-  //получаем массив карточек
-  // useEffect(() => {
-  //   api
-  //     .getInitialCards()
-  //     .then((cards) => {
-  //       console.log('useEffect: cards= ',cards);
-  //       setCards(cards.cards);
-  //     })
-  //     .catch((err) => console.log(err));
-
-  // }, []);
 
   // кнопка Escape
   useEffect(() => {
@@ -152,23 +140,16 @@ function App() {
     return () => document.removeEventListener('keydown', closeByEscape)
   }, []);
 
-  //  Отправляем запрос в API и устанавливаем текущего юзера
-  useEffect(() => {
-    api
-      .getUser()
-      .then((userData) => {
-        setCurrentUser(userData);
-      })
-      .catch((err) => console.log(err));
-  }, [loggedIn]);
-
-
   //Регистрация
   useEffect(() => tokenCheck(), [])
 
   // если залогинены - получаем карточки и информацию о пользователе
   useEffect(() => {
     if (loggedIn) {
+
+      api
+        .updateTokenInHeaders();
+
       api
       .renderUserAndCards()
       .then(([userData, cards]) => {

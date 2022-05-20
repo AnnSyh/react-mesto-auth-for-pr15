@@ -15,14 +15,6 @@ class Api {
     this._headers = headers;
   }
 
-  // _getHeaders() {
-  //   const token = localStorage.getItem('token');
-  //   return {
-  //     'Authorization': `Bearer ${token}`,
-  //     ...this._headers,
-  //   };
-  // }
-
   updateTokenInHeaders() {
     this._headers = {
         'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -41,6 +33,7 @@ class Api {
 
   getInitialCards() {
     return fetch(`${this._url}/cards`, { 
+      method: 'GET',
       headers: this._headers,
     })
       .then(handleError);

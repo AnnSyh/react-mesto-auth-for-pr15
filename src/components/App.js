@@ -13,6 +13,9 @@ import Register from './Register';
 import Login from './Login';
 import CurrentUserContext from '../contexts/CurrentUserContext';
 
+import checkedIcon from '../images/checked.svg';
+import errorIcon from '../images/error.svg';
+
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
@@ -148,13 +151,13 @@ function App() {
     if (loggedIn) {
 
       api
-        .updateTokenInHeaders();
+        .updateTokenInHeaders();//обновляем 
 
       api
       .renderUserAndCards()
       .then(([userData, cards]) => {
         setCurrentUser(userData);
-        setCards(cards.cards);
+        setCards(cards.cards.reverse());
       })
       .catch((err) => console.log(err));
       
@@ -208,17 +211,12 @@ function App() {
     auth
       .authorize(username, password)
       .then((data) => {
-
-        console.log('data= ', data);
-        console.log('data.token= ', data.token);
-       
-
+        // console.log('data= ', data);
+        // console.log('data.token= ', data.token);
           const userData = { username, password }
           localStorage.setItem('token', data.token);  // в localStorage записываем текущий token
           setUserData(userData)                       // устанавливаем данные юзера
-
-          console.log('userData= ', userData);
-
+          // console.log('userData= ', userData);
           setLoggedIn(true)                           // меняем состояние на залогинен
       })
       .catch((err) => {
@@ -316,12 +314,14 @@ function App() {
         onClose={closeAllPopups}
         isOpen={isFailInfoTooltipOpen}
         message={'Что-то пошло не так! Попробуйте ещё раз.'}
+        img={errorIcon}
       />
       {/* /попап для успешной регистрации */}
       <InfoTooltip
         onClose={closeAllPopups}
         isOpen={isSuccessInfoTooltipOpen}
-        message={'Поздравляю! Вы зарегистрировались'}
+        message={'Вы успешно зарегистрировались!'}
+        img={checkedIcon}
       />
 
       {/* /попап для картинки карточки */}

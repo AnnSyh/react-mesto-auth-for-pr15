@@ -1,9 +1,8 @@
 import React from 'react';
 import PopupWithOutForm from './PopupWithOutForm';
-import checkedIcon from '../images/checked.svg';
+// import checkedIcon from '../images/checked.svg';
 
 function InfoTooltip(props) {
-
     return (
 
         <PopupWithOutForm
@@ -13,7 +12,7 @@ function InfoTooltip(props) {
         >
           <div className="form__field form__field-center">
             <img className="popup__img popup__img_icon"
-                    src={checkedIcon}
+                    src={props.img}
                     alt='checked' />
             <h2 className="page-title popup__page-title text-center">
               {props.message}

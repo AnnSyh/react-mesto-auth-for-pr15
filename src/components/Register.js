@@ -3,9 +3,9 @@ import { useState } from 'react';
 import { Link } from "react-router-dom";
 
 
-function Register({ handleRegister}) {
+function Register({ handleRegister }) {
 
-  const [registerData, setRegisterData] = useState({ 
+  const [registerData, setRegisterData] = useState({
     password: '',
     email: '',
   });
@@ -16,14 +16,14 @@ function Register({ handleRegister}) {
   function handleChange(e) {
     const { name, value } = e.target;
     setRegisterData({
-      ...registerData, 
-      [name]: value 
+      ...registerData,
+      [name]: value
     });
   }
   function handleSubmit(e) {
     e.preventDefault();
-    handleRegister(email,password)
-      // .catch((e) => setMessage(e.message))
+    handleRegister(email, password)
+    // .catch((e) => setMessage(e.message))
   }
 
   return (
